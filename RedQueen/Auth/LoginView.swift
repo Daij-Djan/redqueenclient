@@ -18,7 +18,7 @@ struct LoginView: View {
             BotAvatarView(size: 96)
                 .padding(.bottom, 16)
 
-            Text("Red Queen")
+            Text(AppConfig.agentDisplayName)
                 .font(.largeTitle.bold())
 
             Text(AppConfig.homeserverURL.replacingOccurrences(of: "https://", with: ""))

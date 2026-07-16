@@ -26,7 +26,7 @@ struct TypingIndicatorView: View {
             Spacer()
         }
         .onAppear { animating = true }
-        .accessibilityLabel("Red Queen is typing")
+        .accessibilityLabel("\(AppConfig.agentDisplayName) is typing")
     }
 }
 

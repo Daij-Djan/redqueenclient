@@ -22,7 +22,7 @@ struct ComposerView: View {
 
     private var inputBar: some View {
         HStack(alignment: .bottom, spacing: 8) {
-            TextField("Message Red Queen…", text: $text, axis: .vertical)
+            TextField(AppConfig.composerPlaceholder, text: $text, axis: .vertical)
                 .lineLimit(1...6)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
