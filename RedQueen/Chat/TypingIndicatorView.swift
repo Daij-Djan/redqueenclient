@@ -7,16 +7,12 @@ struct TypingIndicatorView: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
-            Image(systemName: "crown.fill")
-                .font(.system(size: 14))
-                .foregroundStyle(.white)
-                .frame(width: 28, height: 28)
-                .background(.red.gradient, in: .circle)
+            BotAvatarView(size: 28)
 
             HStack(spacing: 5) {
                 ForEach(0..<3, id: \.self) { index in
                     Circle()
-                        .fill(.secondary)
+                        .fill(Color.reAccent.opacity(0.9))
                         .frame(width: 7, height: 7)
                         .scaleEffect(animating ? 1 : 0.55)
                         .opacity(animating ? 1 : 0.4)

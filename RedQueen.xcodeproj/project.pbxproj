@@ -11,11 +11,13 @@
 		303B4284142F80CF44AA6888 /* MatrixRustSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */; };
 		436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3037431103223EDCC69DF21 /* SettingsView.swift */; };
 		49AA7F72D4CA2FDE0361FA29 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */; };
+		4BE51C29D9040FC1900B5AD5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4C3355EC7AD4E741FA369C /* Theme.swift */; };
 		549215002CC1C5752C9AB92A /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */; };
 		651C6E8900D1D46FFFC4299E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40918434D2E1E21092E48D4B /* HomeView.swift */; };
 		6BC969C8BA4423751F6E1D73 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80CB37637C57A5E2EF1054B /* ComposerView.swift */; };
 		73BB0801D7606ACC28601EA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3F52E9700722F4FBC93F49 /* LoginView.swift */; };
 		76AA0171622F657664A9BB98 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D9D9D815246FB64A69037 /* KeychainStore.swift */; };
+		8AFA06F18C236C5FFB6E7F7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFAE2F535A9145E66A08233B /* Assets.xcassets */; };
 		8FE1ED8C216C8DA78820EDB5 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */; };
 		A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A80A98DE129073BF00EB616 /* RedQueenApp.swift */; };
 		C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
@@ -49,6 +51,7 @@
 		5EB78092F84B21048655734B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		610D9D9D815246FB64A69037 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
+		6E4C3355EC7AD4E741FA369C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7A80A98DE129073BF00EB616 /* RedQueenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedQueenApp.swift; sourceTree = "<group>"; };
 		8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
 		A80CB37637C57A5E2EF1054B /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 		DC3F52E9700722F4FBC93F49 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedQueenTests.swift; sourceTree = "<group>"; };
 		F7FDB99DD7AA0FAE72D80B0B /* RedQueen.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RedQueen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFAE2F535A9145E66A08233B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,10 +145,19 @@
 			path = Conversations;
 			sourceTree = "<group>";
 		};
+		A65901C21B1B111181114AA9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FFAE2F535A9145E66A08233B /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D50ED0C19E24C80326975228 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */,
+				6E4C3355EC7AD4E741FA369C /* Theme.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -156,6 +169,7 @@
 				7407415740D5D249CB7FF3D4 /* Auth */,
 				6756E524C75E325F03FC459E /* Chat */,
 				7F3C59E0E835AC03657ED08D /* Conversations */,
+				A65901C21B1B111181114AA9 /* Resources */,
 				2ED6EC063E02C20D9F811AA2 /* Settings */,
 				D50ED0C19E24C80326975228 /* Support */,
 			);
@@ -179,6 +193,7 @@
 			buildConfigurationList = 647366BBF4B94EBEAC935923 /* Build configuration list for PBXNativeTarget "RedQueen" */;
 			buildPhases = (
 				0EB3C2A8D8D94DDE55675F4E /* Sources */,
+				F970C3167B83C6D6F316AE24 /* Resources */,
 				42E75DA7FA088B1797B8D8A7 /* Frameworks */,
 			);
 			buildRules = (
@@ -251,6 +266,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F970C3167B83C6D6F316AE24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AFA06F18C236C5FFB6E7F7F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0EB3C2A8D8D94DDE55675F4E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -270,6 +296,7 @@
 				C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */,
 				A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */,
 				436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */,
+				4BE51C29D9040FC1900B5AD5 /* Theme.swift in Sources */,
 				C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */,
 				49AA7F72D4CA2FDE0361FA29 /* TypingIndicatorView.swift in Sources */,
 			);

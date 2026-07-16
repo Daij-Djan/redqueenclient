@@ -15,9 +15,7 @@ struct LoginView: View {
         VStack(spacing: 0) {
             Spacer()
 
-            Image(systemName: "crown.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(.red.gradient)
+            BotAvatarView(size: 96)
                 .padding(.bottom, 16)
 
             Text("Red Queen")
@@ -25,7 +23,7 @@ struct LoginView: View {
 
             Text(AppConfig.homeserverURL.replacingOccurrences(of: "https://", with: ""))
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.reMuted)
                 .padding(.bottom, 40)
 
             VStack(spacing: 12) {
@@ -37,7 +35,7 @@ struct LoginView: View {
                     .submitLabel(.next)
                     .onSubmit { focusedField = .password }
                     .padding(14)
-                    .background(.quaternary.opacity(0.5), in: .rect(cornerRadius: 12))
+                    .background(Color.reSurface, in: .rect(cornerRadius: 12))
 
                 SecureField("Password", text: $password)
                     .textContentType(.password)
@@ -45,7 +43,7 @@ struct LoginView: View {
                     .submitLabel(.go)
                     .onSubmit { logIn() }
                     .padding(14)
-                    .background(.quaternary.opacity(0.5), in: .rect(cornerRadius: 12))
+                    .background(Color.reSurface, in: .rect(cornerRadius: 12))
             }
             .frame(maxWidth: 400)
 
@@ -66,7 +64,7 @@ struct LoginView: View {
                 }
                 .frame(maxWidth: 400)
                 .padding(.vertical, 14)
-                .background(canSubmit ? Color.red : Color.gray.opacity(0.4), in: .rect(cornerRadius: 12))
+                .background(canSubmit ? Color.reAccent : Color.reSurface, in: .rect(cornerRadius: 12))
                 .foregroundStyle(.white)
             }
             .disabled(!canSubmit || isLoggingIn)
@@ -76,6 +74,8 @@ struct LoginView: View {
             Spacer()
         }
         .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(REBackground())
         .onAppear { focusedField = .username }
     }
 
