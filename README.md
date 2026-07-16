@@ -78,6 +78,11 @@ Defaults live in `RedQueen/Support/AppConfig.swift`:
 ## Server-side expectations
 
 - Synapse with simplified sliding sync (any recent version).
+- **Password AutoFill**: the app declares
+  `webcredentials:matrix.roesrath-kleineichen.de`; for iOS to offer saved
+  passwords on the login screen, serve `server/apple-app-site-association`
+  at `https://matrix.roesrath-kleineichen.de/.well-known/apple-app-site-association`
+  (content-type `application/json`, HTTP 200, no redirect).
 - The agent must **auto-accept room invites**, or new chats stay unanswered.
 - Typing indicators from the agent power the "thinking" animation — the agent
   should send (and refresh) `m.typing` while it works.
