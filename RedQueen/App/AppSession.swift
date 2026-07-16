@@ -1,6 +1,9 @@
 import Foundation
 import Observation
+import OSLog
 import MatrixRustSDK
+
+private let log = Logger(subsystem: "info.pich.redqueen", category: "Session")
 
 /// Owns the SDK `Client` and sync loop for the lifetime of a login.
 @MainActor @Observable
@@ -17,6 +20,7 @@ final class AppSession {
     private(set) var syncService: SyncService?
 
     private var storeID: String?
+    private var syncStateHandle: TaskHandle?
 
     /// Restores a persisted session if one exists; otherwise shows login.
     func launch() async {
@@ -57,6 +61,12 @@ final class AppSession {
         state = .loggedOut
     }
 
+    private final class SyncStateLogger: SyncServiceStateObserver {
+        func onUpdate(state: SyncServiceState) {
+            log.info("Sync service state: \(String(describing: state), privacy: .public)")
+        }
+    }
+
     private func activate(_ client: Client, storeID: String) async throws {
         self.client = client
         self.storeID = storeID
@@ -64,6 +74,7 @@ final class AppSession {
 
         let syncService = try await client.syncService().finish()
         self.syncService = syncService
+        syncStateHandle = syncService.state(listener: SyncStateLogger())
         await syncService.start()
 
         state = .active

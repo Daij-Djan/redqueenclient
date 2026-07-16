@@ -5,12 +5,16 @@ struct ChatView: View {
     let room: Room
     /// Sent on arrival — the home-screen composer flow.
     var initialMessage: String?
+    var initialRecording: VoiceRecorder.Recording?
 
     @Environment(AppSession.self) private var appSession
     @State private var store = TimelineStore()
     @State private var draft = ""
     @State private var attachError: String?
     @State private var didSendInitialMessage = false
+    @State private var isShowingCall = false
+    @State private var recorder = VoiceRecorder()
+    @State private var audioPlayer = AudioPlayerService()
     /// Tracked via the bottom sentinel's lazy-container lifecycle; true while
     /// the user is at (or within the lazy buffer of) the end.
     @State private var isNearBottom = true
@@ -53,9 +57,13 @@ struct ChatView: View {
                         .foregroundStyle(.red)
                 }
 
-                ComposerView(text: $draft) { send(proxy: proxy) }
+                ComposerView(text: $draft,
+                             onSend: { send(proxy: proxy) },
+                             recorder: recorder,
+                             onSendVoice: { sendVoice($0, proxy: proxy) })
             }
             .background(REBackground())
+            .environment(audioPlayer)
             .onChange(of: store.messages.count) { _, _ in
                 // Stick to the bottom for our own messages, or whenever the
                 // user hasn't scrolled up to read history.
@@ -76,21 +84,60 @@ struct ChatView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    isShowingCall = true
+                } label: {
+                    Image(systemName: "phone.fill")
+                }
+                .accessibilityLabel("Voice call")
+            }
+        }
+        #if os(iOS)
+        .fullScreenCover(isPresented: $isShowingCall) {
+            CallScreen(room: room)
+        }
+        #else
+        .sheet(isPresented: $isShowingCall) {
+            CallScreen(room: room)
+        }
+        #endif
         .task(id: room.id()) {
             store.detach()
+            audioPlayer.client = appSession.client
             do {
                 try await store.attach(room: room, ownUserID: appSession.userID)
                 await store.markAsRead()
-                if let initialMessage, !didSendInitialMessage {
-                    didSendInitialMessage = true
-                    try await store.send(initialMessage)
-                    await NewChatService.autoName(room: room, firstMessage: initialMessage)
+                if !didSendInitialMessage {
+                    if let initialMessage {
+                        didSendInitialMessage = true
+                        try await store.send(initialMessage)
+                        await NewChatService.autoName(room: room, firstMessage: initialMessage)
+                    } else if let initialRecording {
+                        didSendInitialMessage = true
+                        try store.sendVoiceMessage(initialRecording)
+                        await NewChatService.autoName(room: room, firstMessage: "Voice message")
+                    }
                 }
             } catch {
                 attachError = "Could not load conversation: \(error.localizedDescription)"
             }
         }
-        .onDisappear { store.detach() }
+        .onDisappear {
+            _ = recorder.stop(discard: true)
+            audioPlayer.stop()
+            store.detach()
+        }
+    }
+
+    private func sendVoice(_ recording: VoiceRecorder.Recording, proxy: ScrollViewProxy) {
+        do {
+            try store.sendVoiceMessage(recording)
+            scrollToBottom(proxy)
+        } catch {
+            attachError = "Voice message failed: \(error.localizedDescription)"
+        }
     }
 
     private func scrollToBottom(_ proxy: ScrollViewProxy) {

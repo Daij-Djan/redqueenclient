@@ -18,6 +18,11 @@ enum AppConfig {
     /// Off until Hermes E2EE support is confirmed.
     static let encryptNewConversations = false
 
+    /// Element Call web app used for voice/video, overridable in Settings.
+    /// Works with any MatrixRTC-capable homeserver; the LiveKit backend comes
+    /// from the homeserver's .well-known (livekit.roesrath-kleineichen.de).
+    static let defaultElementCallURL = "https://call.element.io"
+
     /// Version of the bundled Matrix Rust SDK, to show in Settings.
     static var sdkVersion: String { MatrixRustSDK.sdkGitSha() }
 }

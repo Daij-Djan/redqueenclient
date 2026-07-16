@@ -2,18 +2,41 @@ import Foundation
 import Observation
 import MatrixRustSDK
 
+/// An audio (or voice) attachment on a message.
+struct AudioAttachment {
+    let source: MediaSource
+    let filename: String
+    let duration: TimeInterval?
+    let mimetype: String?
+    /// True for MSC3245 voice messages (vs. plain audio files).
+    let isVoice: Bool
+}
+
+enum ChatMessageContent {
+    case text(String)
+    case audio(AudioAttachment)
+}
+
 /// A renderable chat message derived from a timeline item.
 struct ChatMessage: Identifiable, Equatable {
     let id: String
     let eventID: String?
     let sender: String
     let isOwn: Bool
-    var text: String
+    var content: ChatMessageContent
     var isEdited: Bool
     let timestamp: Date
 
     static func == (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
-        lhs.id == rhs.id && lhs.text == rhs.text && lhs.isEdited == rhs.isEdited
+        guard lhs.id == rhs.id, lhs.isEdited == rhs.isEdited else { return false }
+        switch (lhs.content, rhs.content) {
+        case (.text(let a), .text(let b)):
+            return a == b
+        case (.audio(let a), .audio(let b)):
+            return a.filename == b.filename && a.duration == b.duration
+        default:
+            return false
+        }
     }
 }
 
@@ -71,6 +94,25 @@ final class TimelineStore {
         setTyping(false)
     }
 
+    /// Uploads and sends a recorded voice note (MSC3245); the local echo
+    /// arrives through the timeline like any other message.
+    func sendVoiceMessage(_ recording: VoiceRecorder.Recording) throws {
+        guard let timeline else { return }
+        let fileSize = (try? FileManager.default.attributesOfItem(
+            atPath: recording.fileURL.path(percentEncoded: false))[.size] as? UInt64) ?? nil
+        let params = UploadParameters(source: .file(filename: recording.fileURL.path(percentEncoded: false)),
+                                      caption: nil,
+                                      formattedCaption: nil,
+                                      mentions: nil,
+                                      inReplyTo: nil)
+        let info = AudioInfo(duration: recording.duration,
+                             size: fileSize,
+                             mimetype: "audio/mp4")
+        _ = try timeline.sendVoiceMessage(params: params,
+                                          audioInfo: info,
+                                          waveform: recording.waveform)
+    }
+
     /// Announces our own typing state; the SDK debounces repeat calls.
     func setTyping(_ isTyping: Bool) {
         guard let room else { return }
@@ -121,11 +163,23 @@ final class TimelineStore {
             eventID = nil
         }
 
+        let content: ChatMessageContent
+        switch message.msgType {
+        case .audio(let audio):
+            content = .audio(AudioAttachment(source: audio.source,
+                                             filename: audio.filename,
+                                             duration: audio.info?.duration,
+                                             mimetype: audio.info?.mimetype,
+                                             isVoice: audio.voice != nil))
+        default:
+            content = .text(message.body)
+        }
+
         return ChatMessage(id: item.uniqueId().id,
                            eventID: eventID,
                            sender: event.sender,
                            isOwn: event.isOwn,
-                           text: message.body,
+                           content: content,
                            isEdited: message.isEdited,
                            timestamp: Date(timeIntervalSince1970: TimeInterval(event.timestamp) / 1000))
     }
