@@ -6,6 +6,7 @@ import MatrixRustSDK
 struct ChatDestination: Hashable {
     let roomID: String
     var initialMessage: String?
+    var initialRecording: VoiceRecorder.Recording?
 }
 
 /// Cold start shows the home composer once; afterwards the root is the
@@ -34,6 +35,7 @@ struct MainView: View {
                 if isShowingHome {
                     HomeView(isCreating: isCreatingChat,
                              onSubmit: { startChat(sending: $0) },
+                             onSubmitVoice: { startChat(sending: nil, recording: $0) },
                              onShowConversations: { isShowingHome = false })
                 } else {
                     conversationListView
@@ -41,7 +43,9 @@ struct MainView: View {
             }
             .navigationDestination(for: ChatDestination.self) { destination in
                 if let room = resolveRoom(destination.roomID) {
-                    ChatView(room: room, initialMessage: destination.initialMessage)
+                    ChatView(room: room,
+                             initialMessage: destination.initialMessage,
+                             initialRecording: destination.initialRecording)
                 } else {
                     ContentUnavailableView("Conversation not found",
                                            systemImage: "bubble.left",
@@ -173,7 +177,7 @@ struct MainView: View {
         return try? appSession.client?.getRoom(roomId: roomID)
     }
 
-    private func startChat(sending message: String?) {
+    private func startChat(sending message: String?, recording: VoiceRecorder.Recording? = nil) {
         guard let client = appSession.client, !isCreatingChat else { return }
         isCreatingChat = true
         Task {
@@ -182,7 +186,9 @@ struct MainView: View {
                                                                            agentUserID: agentUserID)
                 conversationList.refreshMembership(roomID: room.id())
                 isShowingHome = false
-                path.append(ChatDestination(roomID: room.id(), initialMessage: message))
+                path.append(ChatDestination(roomID: room.id(),
+                                            initialMessage: message,
+                                            initialRecording: recording))
             } catch {
                 errorMessage = "Could not create chat: \(error.localizedDescription)"
             }

@@ -4,6 +4,7 @@ struct SettingsView: View {
     @Environment(AppSession.self) private var appSession
     @Environment(\.dismiss) private var dismiss
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
+    @AppStorage("elementCallURL") private var elementCallURL = AppConfig.defaultElementCallURL
 
     var body: some View {
         NavigationStack {
@@ -23,6 +24,17 @@ struct SettingsView: View {
                     Text("Agent")
                 } footer: {
                     Text("Matrix user ID of the Hermes agent. New chats invite this user. Leave empty to use the default shown above — it must be on your homeserver, not a federated domain.")
+                }
+
+                Section {
+                    TextField(AppConfig.defaultElementCallURL, text: $elementCallURL)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.URL)
+                } header: {
+                    Text("Voice & Video")
+                } footer: {
+                    Text("Element Call web app used for calls. The LiveKit backend comes from your homeserver's .well-known.")
                 }
 
                 Section {

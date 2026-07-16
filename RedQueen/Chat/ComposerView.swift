@@ -3,8 +3,24 @@ import SwiftUI
 struct ComposerView: View {
     @Binding var text: String
     let onSend: () -> Void
+    /// When set, the composer offers voice recording while the field is empty.
+    var recorder: VoiceRecorder?
+    var onSendVoice: ((VoiceRecorder.Recording) -> Void)?
 
     var body: some View {
+        Group {
+            if let recorder, recorder.isRecording {
+                recordingBar(recorder)
+            } else {
+                inputBar
+            }
+        }
+        .background(Color.reSurface, in: .rect(cornerRadius: 22))
+        .padding(.horizontal, 12)
+        .padding(.bottom, 8)
+    }
+
+    private var inputBar: some View {
         HStack(alignment: .bottom, spacing: 8) {
             TextField("Message Red Queen…", text: $text, axis: .vertical)
                 .lineLimit(1...6)
@@ -20,18 +36,71 @@ struct ComposerView: View {
                     return .handled
                 }
 
-            Button(action: sendIfPossible) {
+            if canSend || recorder == nil {
+                Button(action: sendIfPossible) {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.system(size: 30))
+                        .foregroundStyle(canSend ? Color.reAccent : Color.reMuted.opacity(0.4))
+                }
+                .disabled(!canSend)
+                .padding(.trailing, 6)
+                .padding(.bottom, 4)
+            } else if let recorder {
+                Button {
+                    Task {
+                        if await !recorder.start() {
+                            text = "" // permission denied; nothing to do
+                        }
+                    }
+                } label: {
+                    Image(systemName: "mic.circle.fill")
+                        .font(.system(size: 30))
+                        .foregroundStyle(Color.reAccent)
+                }
+                .accessibilityLabel("Record voice message")
+                .padding(.trailing, 6)
+                .padding(.bottom, 4)
+            }
+        }
+    }
+
+    private func recordingBar(_ recorder: VoiceRecorder) -> some View {
+        HStack(spacing: 12) {
+            Button {
+                _ = recorder.stop(discard: true)
+            } label: {
+                Image(systemName: "trash.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(Color.reMuted)
+            }
+            .accessibilityLabel("Discard recording")
+            .padding(.leading, 14)
+
+            Circle()
+                .fill(Color.reAccent)
+                .frame(width: 10, height: 10)
+                .scaleEffect(1 + CGFloat(recorder.currentLevel) * 1.5)
+                .animation(.easeOut(duration: 0.1), value: recorder.currentLevel)
+
+            Text(Self.format(recorder.duration))
+                .font(.callout.monospacedDigit())
+                .foregroundStyle(Color.reMuted)
+
+            Spacer()
+
+            Button {
+                if let recording = recorder.stop() {
+                    onSendVoice?(recording)
+                }
+            } label: {
                 Image(systemName: "arrow.up.circle.fill")
                     .font(.system(size: 30))
-                    .foregroundStyle(canSend ? Color.reAccent : Color.reMuted.opacity(0.4))
+                    .foregroundStyle(Color.reAccent)
             }
-            .disabled(!canSend)
+            .accessibilityLabel("Send voice message")
             .padding(.trailing, 6)
-            .padding(.bottom, 4)
         }
-        .background(Color.reSurface, in: .rect(cornerRadius: 22))
-        .padding(.horizontal, 12)
-        .padding(.bottom, 8)
+        .frame(minHeight: 46)
     }
 
     private var canSend: Bool {
@@ -41,5 +110,10 @@ struct ComposerView: View {
     private func sendIfPossible() {
         guard canSend else { return }
         onSend()
+    }
+
+    private static func format(_ duration: TimeInterval) -> String {
+        let seconds = Int(duration)
+        return String(format: "%d:%02d", seconds / 60, seconds % 60)
     }
 }
