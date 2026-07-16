@@ -8,6 +8,8 @@ struct RedQueenApp: App {
         WindowGroup {
             RootView()
                 .environment(appSession)
+                .preferredColorScheme(.dark)
+                .tint(.reAccent)
         }
     }
 }
@@ -16,19 +18,22 @@ struct RootView: View {
     @Environment(AppSession.self) private var appSession
 
     var body: some View {
-        switch appSession.state {
-        case .launching:
-            VStack(spacing: 16) {
-                Image(systemName: "crown.fill")
-                    .font(.system(size: 48))
-                    .foregroundStyle(.red.gradient)
-                ProgressView()
+        Group {
+            switch appSession.state {
+            case .launching:
+                VStack(spacing: 16) {
+                    BotAvatarView(size: 96)
+                    ProgressView()
+                        .tint(.reMuted)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(REBackground())
+                .task { await appSession.launch() }
+            case .loggedOut:
+                LoginView()
+            case .active:
+                MainView()
             }
-            .task { await appSession.launch() }
-        case .loggedOut:
-            LoginView()
-        case .active:
-            MainView()
         }
     }
 }

@@ -13,15 +13,11 @@ struct MessageBubble: View {
                     .textSelection(.enabled)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
-                    .background(.quaternary.opacity(0.7), in: .rect(cornerRadius: 18))
+                    .background(Color.reSurface, in: .rect(cornerRadius: 18))
             }
         } else {
             HStack(alignment: .top, spacing: 10) {
-                Image(systemName: "crown.fill")
-                    .font(.system(size: 14))
-                    .foregroundStyle(.white)
-                    .frame(width: 28, height: 28)
-                    .background(.red.gradient, in: .circle)
+                BotAvatarView(size: 28)
                 Text(markdown)
                     .textSelection(.enabled)
                     .frame(maxWidth: .infinity, alignment: .leading)

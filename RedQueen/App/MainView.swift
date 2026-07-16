@@ -21,6 +21,7 @@ struct MainView: View {
     @State private var isShowingSettings = false
     @State private var isCreatingChat = false
     @State private var errorMessage: String?
+    @State private var conversationToDelete: Conversation?
 
     private var agentUserID: String {
         let trimmed = agentUserIDOverride.trimmingCharacters(in: .whitespaces)
@@ -73,29 +74,43 @@ struct MainView: View {
         List {
             Section {
                 ForEach(conversationList.conversations) { conversation in
-                    NavigationLink(value: ChatDestination(roomID: conversation.id)) {
-                        Label(conversation.displayName, systemImage: "bubble.left")
-                            .lineLimit(1)
-                    }
+                    conversationRow(conversation, icon: "bubble.left")
                 }
             }
+            .listRowBackground(Color.reSurface.opacity(0.55))
 
             if !conversationList.otherRooms.isEmpty {
                 Section("Other rooms") {
                     ForEach(conversationList.otherRooms) { conversation in
-                        NavigationLink(value: ChatDestination(roomID: conversation.id)) {
-                            Label(conversation.displayName, systemImage: "number")
-                                .lineLimit(1)
-                        }
+                        conversationRow(conversation, icon: "number")
                     }
                 }
+                .listRowBackground(Color.reSurface.opacity(0.55))
             }
+        }
+        .scrollContentBackground(.hidden)
+        .background(REBackground())
+        .confirmationDialog("Delete “\(conversationToDelete?.displayName ?? "")”?",
+                            isPresented: .init(
+                                get: { conversationToDelete != nil },
+                                set: { if !$0 { conversationToDelete = nil } }
+                            ),
+                            titleVisibility: .visible) {
+            Button("Delete Conversation", role: .destructive) {
+                if let conversationToDelete {
+                    delete(conversationToDelete)
+                }
+            }
+        } message: {
+            Text("Leaves the room and removes it from your account. This cannot be undone.")
         }
         .overlay {
             if conversationList.conversations.isEmpty && conversationList.otherRooms.isEmpty {
-                ContentUnavailableView("No conversations yet",
-                                       systemImage: "crown",
-                                       description: Text("Start one with the compose button."))
+                ContentUnavailableView {
+                    BotAvatarView(size: 64)
+                } description: {
+                    Text("No conversations yet — start one with the compose button.")
+                }
             }
         }
         .navigationTitle("Red Queen")
@@ -118,6 +133,37 @@ struct MainView: View {
                     Image(systemName: "gearshape")
                 }
                 .accessibilityLabel("Settings")
+            }
+        }
+    }
+
+    private func conversationRow(_ conversation: Conversation, icon: String) -> some View {
+        NavigationLink(value: ChatDestination(roomID: conversation.id)) {
+            Label(conversation.displayName, systemImage: icon)
+                .lineLimit(1)
+        }
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+                conversationToDelete = conversation
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+
+    /// "Deleting" a Matrix room = leave it, then forget it; the room list's
+    /// nonLeft filter drops it from the UI once the leave syncs.
+    private func delete(_ conversation: Conversation) {
+        guard let room = resolveRoom(conversation.id) else {
+            errorMessage = "Room not found."
+            return
+        }
+        Task {
+            do {
+                try await room.leave()
+                try? await room.forget()
+            } catch {
+                errorMessage = "Could not delete conversation: \(error.localizedDescription)"
             }
         }
     }

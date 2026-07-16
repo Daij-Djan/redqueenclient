@@ -55,6 +55,7 @@ struct ChatView: View {
 
                 ComposerView(text: $draft) { send(proxy: proxy) }
             }
+            .background(REBackground())
             .onChange(of: store.messages.count) { _, _ in
                 // Stick to the bottom for our own messages, or whenever the
                 // user hasn't scrolled up to read history.

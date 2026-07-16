@@ -14,10 +14,8 @@ struct HomeView: View {
         VStack(spacing: 0) {
             Spacer()
 
-            Image(systemName: "crown.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(.red.gradient)
-                .padding(.bottom, 12)
+            BotAvatarView(size: 120, glow: 2)
+                .padding(.bottom, 16)
 
             Text("What can I do for you?")
                 .font(.title2.bold())
@@ -29,6 +27,14 @@ struct HomeView: View {
                     .focused($isFocused)
                     .padding(.horizontal, 18)
                     .padding(.vertical, 14)
+                    // Hardware keyboards: Enter sends, Shift+Enter inserts a newline.
+                    .onKeyPress(phases: .down) { press in
+                        guard press.key == .return, press.modifiers.isDisjoint(with: [.shift, .option]) else {
+                            return .ignored
+                        }
+                        submit()
+                        return .handled
+                    }
 
                 Button(action: submit) {
                     if isCreating {
@@ -37,20 +43,22 @@ struct HomeView: View {
                     } else {
                         Image(systemName: "arrow.up.circle.fill")
                             .font(.system(size: 34))
-                            .foregroundStyle(canSend ? Color.red : Color.gray.opacity(0.5))
+                            .foregroundStyle(canSend ? Color.reAccent : Color.reMuted.opacity(0.4))
                     }
                 }
                 .disabled(!canSend || isCreating)
                 .padding(.trailing, 8)
                 .padding(.bottom, 8)
             }
-            .background(.quaternary.opacity(0.5), in: .rect(cornerRadius: 26))
+            .background(Color.reSurface, in: .rect(cornerRadius: 26))
             .frame(maxWidth: 560)
             .padding(.horizontal, 20)
 
             Spacer()
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(REBackground())
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: onShowConversations) {

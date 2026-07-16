@@ -40,6 +40,8 @@ struct SettingsView: View {
                     Text("Matrix Rust SDK build")
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(REBackground())
             .navigationTitle("Settings")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)

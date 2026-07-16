@@ -11,17 +11,25 @@ struct ComposerView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
                 .onSubmit(sendIfPossible)
+                // Hardware keyboards: Enter sends, Shift+Enter inserts a newline.
+                .onKeyPress(phases: .down) { press in
+                    guard press.key == .return, press.modifiers.isDisjoint(with: [.shift, .option]) else {
+                        return .ignored
+                    }
+                    sendIfPossible()
+                    return .handled
+                }
 
             Button(action: sendIfPossible) {
                 Image(systemName: "arrow.up.circle.fill")
                     .font(.system(size: 30))
-                    .foregroundStyle(canSend ? Color.red : Color.gray.opacity(0.5))
+                    .foregroundStyle(canSend ? Color.reAccent : Color.reMuted.opacity(0.4))
             }
             .disabled(!canSend)
             .padding(.trailing, 6)
             .padding(.bottom, 4)
         }
-        .background(.quaternary.opacity(0.5), in: .rect(cornerRadius: 22))
+        .background(Color.reSurface, in: .rect(cornerRadius: 22))
         .padding(.horizontal, 12)
         .padding(.bottom, 8)
     }
