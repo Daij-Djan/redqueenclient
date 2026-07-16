@@ -62,6 +62,7 @@
 		7A80A98DE129073BF00EB616 /* RedQueenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedQueenApp.swift; sourceTree = "<group>"; };
 		834A391E5418D3E78D15D32B /* CallModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallModel.swift; sourceTree = "<group>"; };
 		8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
+		929451A2AE050D2346CDBC17 /* RedQueen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RedQueen.entitlements; sourceTree = "<group>"; };
 		9876B07F521F42641269A6BD /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 		A80CB37637C57A5E2EF1054B /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
 		B448D9E3C3A4761F34E2289D /* TimelineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStore.swift; sourceTree = "<group>"; };
@@ -195,6 +196,7 @@
 				A65901C21B1B111181114AA9 /* Resources */,
 				2ED6EC063E02C20D9F811AA2 /* Settings */,
 				D50ED0C19E24C80326975228 /* Support */,
+				929451A2AE050D2346CDBC17 /* RedQueen.entitlements */,
 			);
 			path = RedQueen;
 			sourceTree = "<group>";
@@ -259,10 +261,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					12B9434C2E941FBE43AC99C6 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = QKGXKAB6MT;
 					};
 					1550FB2B268CBBBDA9046095 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = QKGXKAB6MT;
 					};
 				};
 			};
@@ -371,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedQueen/RedQueen.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -427,7 +430,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QKGXKAB6MT;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -454,6 +457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedQueen/RedQueen.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -510,7 +514,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QKGXKAB6MT;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

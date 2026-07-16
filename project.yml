@@ -15,7 +15,7 @@ settings:
     SWIFT_VERSION: "5.0"
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: QKGXKAB6MT
 
 targets:
   RedQueen:
@@ -23,6 +23,15 @@ targets:
     platform: iOS
     sources:
       - RedQueen
+    entitlements:
+      path: RedQueen/RedQueen.entitlements
+      properties:
+        # Lets iOS password managers offer credentials saved for the
+        # homeserver domain on the login screen. Requires the matching
+        # apple-app-site-association file on the server.
+        com.apple.developer.associated-domains:
+          - webcredentials:matrix.roesrath-kleineichen.de
+          - webcredentials:roesrath-kleineichen.de
     dependencies:
       - package: MatrixRustSDK
     settings:
