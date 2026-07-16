@@ -98,6 +98,34 @@ RedQueen/
 └── Support/        # AppConfig, theme
 ```
 
+## Reusing this app for your own agent
+
+Nothing in the app is hardwired to Red Queen except a handful of well-known
+places — swap these and you have your own branded agent client:
+
+- **Homeserver URL**: `homeserverURL` in `RedQueen/Support/AppConfig.swift`.
+  The login screen pre-fills it; sliding sync support is discovered
+  automatically.
+- **Agent name**: the `@hermes` localpart in
+  `AppConfig.defaultAgentUserID(ownUserID:)` — the domain is always derived
+  from the logged-in user, so only the localpart matters. (End users can also
+  override the full Matrix ID at runtime in Settings, no rebuild needed.)
+- **Icon & avatar**: replace
+  `RedQueen/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png`
+  (1024×1024) and `…/BotAvatar.imageset/BotAvatar.png` (512×512). The avatar
+  is used everywhere the agent appears — bubbles, typing indicator, home and
+  login screens.
+- **Background & theme**: all colors live in `RedQueen/Support/Theme.swift` —
+  `reBackground` (base), `reSurface` (fields/bubbles), `reAccent` (buttons,
+  glow), `reMuted` (secondary text), `reGlass` (glass panels). The `REBackground`
+  view in the same file draws the glow-and-panes backdrop; tone it down or
+  replace it wholesale, every screen picks it up.
+- **App name**: `name`, `PRODUCT_NAME`, and `PRODUCT_BUNDLE_IDENTIFIER` in
+  `project.yml`, then `xcodegen generate`. The user-facing strings ("Red
+  Queen" titles and the "Message Red Queen…" placeholders) are plain string
+  literals in `LoginView`, `HomeView`, `MainView`, and `ComposerView` — a
+  project-wide search for "Red Queen" finds them all.
+
 ## Roadmap
 
 - Push notifications (Sygnal + Notification Service Extension)
