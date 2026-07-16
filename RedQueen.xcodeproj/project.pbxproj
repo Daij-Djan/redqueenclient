@@ -1,0 +1,553 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0070FF4E9DA7964142B96722 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250E75AD01E5D2DA57366C30 /* ChatView.swift */; };
+		303B4284142F80CF44AA6888 /* MatrixRustSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */; };
+		436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3037431103223EDCC69DF21 /* SettingsView.swift */; };
+		49AA7F72D4CA2FDE0361FA29 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */; };
+		549215002CC1C5752C9AB92A /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */; };
+		651C6E8900D1D46FFFC4299E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40918434D2E1E21092E48D4B /* HomeView.swift */; };
+		6BC969C8BA4423751F6E1D73 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80CB37637C57A5E2EF1054B /* ComposerView.swift */; };
+		73BB0801D7606ACC28601EA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3F52E9700722F4FBC93F49 /* LoginView.swift */; };
+		76AA0171622F657664A9BB98 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D9D9D815246FB64A69037 /* KeychainStore.swift */; };
+		8FE1ED8C216C8DA78820EDB5 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */; };
+		A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A80A98DE129073BF00EB616 /* RedQueenApp.swift */; };
+		C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
+		C43630A0C6C8F15BC1E39CBA /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */; };
+		C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */; };
+		D2A19E4969B80BF46304C580 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB78092F84B21048655734B /* AuthService.swift */; };
+		D6F17CC00C722FC6F6F74376 /* RedQueenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */; };
+		DC9BFA64A902A5E192E018B4 /* ConversationListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */; };
+		E12E33B325B676BE7F4773E9 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */; };
+		E986221F2D977525D0EFAB47 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		80F9F1E63CC16BD03B9D04A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 290CA69028ADCBACF4B305F0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 12B9434C2E941FBE43AC99C6;
+			remoteInfo = RedQueen;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
+		250E75AD01E5D2DA57366C30 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListStore.swift; sourceTree = "<group>"; };
+		40918434D2E1E21092E48D4B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatService.swift; sourceTree = "<group>"; };
+		57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RedQueenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EB78092F84B21048655734B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		610D9D9D815246FB64A69037 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
+		7A80A98DE129073BF00EB616 /* RedQueenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedQueenApp.swift; sourceTree = "<group>"; };
+		8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
+		A80CB37637C57A5E2EF1054B /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
+		B448D9E3C3A4761F34E2289D /* TimelineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStore.swift; sourceTree = "<group>"; };
+		B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		C3037431103223EDCC69DF21 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		DC3F52E9700722F4FBC93F49 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedQueenTests.swift; sourceTree = "<group>"; };
+		F7FDB99DD7AA0FAE72D80B0B /* RedQueen.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RedQueen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42E75DA7FA088B1797B8D8A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				303B4284142F80CF44AA6888 /* MatrixRustSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2ED6EC063E02C20D9F811AA2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C3037431103223EDCC69DF21 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		37D5E7BDA3F3BC54EA24DFC5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */,
+				CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */,
+				7A80A98DE129073BF00EB616 /* RedQueenApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		3CDD9ABD451159863B3660D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F7FDB99DD7AA0FAE72D80B0B /* RedQueen.app */,
+				57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6756E524C75E325F03FC459E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				250E75AD01E5D2DA57366C30 /* ChatView.swift */,
+				A80CB37637C57A5E2EF1054B /* ComposerView.swift */,
+				0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */,
+				B448D9E3C3A4761F34E2289D /* TimelineStore.swift */,
+				8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		6B764F1E451AA40A94795510 = {
+			isa = PBXGroup;
+			children = (
+				EA3CD19ADEECF5987086C0E3 /* RedQueen */,
+				FC361664A7C6946C45B18DFE /* RedQueenTests */,
+				3CDD9ABD451159863B3660D9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7407415740D5D249CB7FF3D4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				5EB78092F84B21048655734B /* AuthService.swift */,
+				610D9D9D815246FB64A69037 /* KeychainStore.swift */,
+				DC3F52E9700722F4FBC93F49 /* LoginView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		7F3C59E0E835AC03657ED08D /* Conversations */ = {
+			isa = PBXGroup;
+			children = (
+				307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */,
+				40918434D2E1E21092E48D4B /* HomeView.swift */,
+				464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */,
+			);
+			path = Conversations;
+			sourceTree = "<group>";
+		};
+		D50ED0C19E24C80326975228 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		EA3CD19ADEECF5987086C0E3 /* RedQueen */ = {
+			isa = PBXGroup;
+			children = (
+				37D5E7BDA3F3BC54EA24DFC5 /* App */,
+				7407415740D5D249CB7FF3D4 /* Auth */,
+				6756E524C75E325F03FC459E /* Chat */,
+				7F3C59E0E835AC03657ED08D /* Conversations */,
+				2ED6EC063E02C20D9F811AA2 /* Settings */,
+				D50ED0C19E24C80326975228 /* Support */,
+			);
+			path = RedQueen;
+			sourceTree = "<group>";
+		};
+		FC361664A7C6946C45B18DFE /* RedQueenTests */ = {
+			isa = PBXGroup;
+			children = (
+				0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */,
+				E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */,
+			);
+			path = RedQueenTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		12B9434C2E941FBE43AC99C6 /* RedQueen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 647366BBF4B94EBEAC935923 /* Build configuration list for PBXNativeTarget "RedQueen" */;
+			buildPhases = (
+				0EB3C2A8D8D94DDE55675F4E /* Sources */,
+				42E75DA7FA088B1797B8D8A7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedQueen;
+			packageProductDependencies = (
+				DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */,
+			);
+			productName = RedQueen;
+			productReference = F7FDB99DD7AA0FAE72D80B0B /* RedQueen.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1550FB2B268CBBBDA9046095 /* RedQueenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC6C9D04870D453F11C1F027 /* Build configuration list for PBXNativeTarget "RedQueenTests" */;
+			buildPhases = (
+				3A4F20A473A19A04BECC56D4 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53C56DD4D67A2323B4B71DC7 /* PBXTargetDependency */,
+			);
+			name = RedQueenTests;
+			packageProductDependencies = (
+			);
+			productName = RedQueenTests;
+			productReference = 57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		290CA69028ADCBACF4B305F0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					12B9434C2E941FBE43AC99C6 = {
+						DevelopmentTeam = "";
+					};
+					1550FB2B268CBBBDA9046095 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = D49502121F2C191796BD0AFA /* Build configuration list for PBXProject "RedQueen" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6B764F1E451AA40A94795510;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				587AFB2A6FD459546CD660F0 /* XCRemoteSwiftPackageReference "matrix-rust-components-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3CDD9ABD451159863B3660D9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				12B9434C2E941FBE43AC99C6 /* RedQueen */,
+				1550FB2B268CBBBDA9046095 /* RedQueenTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0EB3C2A8D8D94DDE55675F4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E12E33B325B676BE7F4773E9 /* AppConfig.swift in Sources */,
+				8FE1ED8C216C8DA78820EDB5 /* AppSession.swift in Sources */,
+				D2A19E4969B80BF46304C580 /* AuthService.swift in Sources */,
+				0070FF4E9DA7964142B96722 /* ChatView.swift in Sources */,
+				6BC969C8BA4423751F6E1D73 /* ComposerView.swift in Sources */,
+				DC9BFA64A902A5E192E018B4 /* ConversationListStore.swift in Sources */,
+				651C6E8900D1D46FFFC4299E /* HomeView.swift in Sources */,
+				76AA0171622F657664A9BB98 /* KeychainStore.swift in Sources */,
+				73BB0801D7606ACC28601EA3 /* LoginView.swift in Sources */,
+				E986221F2D977525D0EFAB47 /* MainView.swift in Sources */,
+				549215002CC1C5752C9AB92A /* MessageBubble.swift in Sources */,
+				C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */,
+				A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */,
+				436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */,
+				C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */,
+				49AA7F72D4CA2FDE0361FA29 /* TypingIndicatorView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A4F20A473A19A04BECC56D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43630A0C6C8F15BC1E39CBA /* KeychainStoreTests.swift in Sources */,
+				D6F17CC00C722FC6F6F74376 /* RedQueenTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		53C56DD4D67A2323B4B71DC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 12B9434C2E941FBE43AC99C6 /* RedQueen */;
+			targetProxy = 80F9F1E63CC16BD03B9D04A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6429E1E2482047B55FDCE2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedQueen.app/RedQueen";
+			};
+			name = Release;
+		};
+		7E053BC0F82B5F8E937D9F15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen;
+				PRODUCT_NAME = RedQueen;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9CEEA1AE164A1738893D1A15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D49DADC2FC0F838129AF4390 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen;
+				PRODUCT_NAME = RedQueen;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D9C2D5830B0F413D72383DAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F8455AE62E8A6F858055FCC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RedQueen.app/RedQueen";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		647366BBF4B94EBEAC935923 /* Build configuration list for PBXNativeTarget "RedQueen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D49DADC2FC0F838129AF4390 /* Debug */,
+				7E053BC0F82B5F8E937D9F15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D49502121F2C191796BD0AFA /* Build configuration list for PBXProject "RedQueen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9C2D5830B0F413D72383DAB /* Debug */,
+				9CEEA1AE164A1738893D1A15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FC6C9D04870D453F11C1F027 /* Build configuration list for PBXNativeTarget "RedQueenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8455AE62E8A6F858055FCC1 /* Debug */,
+				6429E1E2482047B55FDCE2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		587AFB2A6FD459546CD660F0 /* XCRemoteSwiftPackageReference "matrix-rust-components-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/matrix-org/matrix-rust-components-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 26.06.06;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587AFB2A6FD459546CD660F0 /* XCRemoteSwiftPackageReference "matrix-rust-components-swift" */;
+			productName = MatrixRustSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 290CA69028ADCBACF4B305F0 /* Project object */;
+}
