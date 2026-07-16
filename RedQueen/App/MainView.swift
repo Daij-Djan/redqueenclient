@@ -117,7 +117,7 @@ struct MainView: View {
                 }
             }
         }
-        .navigationTitle("Red Queen")
+        .navigationTitle(AppConfig.agentDisplayName)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { startChat(sending: nil) }) {

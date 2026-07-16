@@ -19,7 +19,7 @@ struct HomeView: View {
             BotAvatarView(size: 120, glow: 2)
                 .padding(.bottom, 16)
 
-            Text("What can I do for you?")
+            Text(AppConfig.homeGreeting)
                 .font(.title2.bold())
                 .padding(.bottom, 28)
 
@@ -52,7 +52,7 @@ struct HomeView: View {
 
     private var inputBar: some View {
         HStack(alignment: .bottom, spacing: 8) {
-            TextField("Message Red Queen…", text: $text, axis: .vertical)
+            TextField(AppConfig.composerPlaceholder, text: $text, axis: .vertical)
                 .lineLimit(1...8)
                 .focused($isFocused)
                 .padding(.horizontal, 18)

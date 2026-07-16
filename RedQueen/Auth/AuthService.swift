@@ -13,7 +13,7 @@ enum AuthService {
             .build()
 
         try await client.login(username: username, password: password,
-                               initialDeviceName: "Red Queen Client", deviceId: nil)
+                               initialDeviceName: AppConfig.deviceDisplayName, deviceId: nil)
 
         let stored = StoredSession(session: try client.session(), storeID: storeID)
         return (client, stored)

@@ -121,10 +121,11 @@ places — swap these and you have your own branded agent client:
   view in the same file draws the glow-and-panes backdrop; tone it down or
   replace it wholesale, every screen picks it up.
 - **App name**: `name`, `PRODUCT_NAME`, and `PRODUCT_BUNDLE_IDENTIFIER` in
-  `project.yml`, then `xcodegen generate`. The user-facing strings ("Red
-  Queen" titles and the "Message Red Queen…" placeholders) are plain string
-  literals in `LoginView`, `HomeView`, `MainView`, and `ComposerView` — a
-  project-wide search for "Red Queen" finds them all.
+  `project.yml`, then `xcodegen generate`. All user-facing branding strings
+  (titles, composer placeholder, home greeting, device name) are centralized
+  in the Branding section of `AppConfig.swift` — change `agentDisplayName`
+  and you're done. The only strings outside it are the mic/camera usage
+  descriptions in `project.yml`.
 
 ## Roadmap
 

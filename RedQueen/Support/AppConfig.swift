@@ -2,6 +2,19 @@ import Foundation
 import MatrixRustSDK
 
 enum AppConfig {
+    // MARK: Branding
+
+    /// The agent's user-facing name, used across titles and labels.
+    static let agentDisplayName = "Red Queen"
+    /// Placeholder shown in message composers.
+    static let composerPlaceholder = "Message \(agentDisplayName)…"
+    /// Greeting on the cold-start home screen.
+    static let homeGreeting = "What can I do for you?"
+    /// Device name shown in the homeserver's session list.
+    static let deviceDisplayName = "\(agentDisplayName) Client"
+
+    // MARK: Server & agent
+
     /// The homeserver every login is pre-filled with.
     static let homeserverURL = "https://matrix.roesrath-kleineichen.de"
 
