@@ -32,6 +32,9 @@ targets:
         # a bare-domain entry widens matching to sibling subdomains (gitlab…).
         com.apple.developer.associated-domains:
           - webcredentials:matrix.roesrath-kleineichen.de
+        # Dev builds use the APNs sandbox; distribution signing rewrites
+        # this to "production".
+        aps-environment: development
     dependencies:
       - package: MatrixRustSDK
     settings:

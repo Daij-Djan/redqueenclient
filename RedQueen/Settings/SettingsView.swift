@@ -5,6 +5,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
     @AppStorage("elementCallURL") private var elementCallURL = AppConfig.defaultElementCallURL
+    @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
 
     var body: some View {
         NavigationStack {
@@ -35,6 +36,17 @@ struct SettingsView: View {
                     Text("Voice & Video")
                 } footer: {
                     Text("Element Call web app used for calls. The LiveKit backend comes from your homeserver's .well-known.")
+                }
+
+                Section {
+                    TextField(AppConfig.defaultPushGatewayURL, text: $pushGatewayURL)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(.URL)
+                } header: {
+                    Text("Push Notifications")
+                } footer: {
+                    Text("Sygnal push gateway notify endpoint. Takes effect at next launch.")
                 }
 
                 Section {

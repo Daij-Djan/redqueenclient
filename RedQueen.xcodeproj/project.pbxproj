@@ -30,6 +30,7 @@
 		A64DD318EFF59A52F41BF719 /* CallWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3154A4B9AF14291E87038 /* CallWebView.swift */; };
 		C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
 		C43630A0C6C8F15BC1E39CBA /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */; };
+		C7A05DAED7611AE2D8C44A8A /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FB00E8C4A0E084B706D2B /* PushManager.swift */; };
 		C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */; };
 		D2A19E4969B80BF46304C580 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB78092F84B21048655734B /* AuthService.swift */; };
 		D6F17CC00C722FC6F6F74376 /* RedQueenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */; };
@@ -54,6 +55,7 @@
 		0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
 		2440A0C17019D0A540486E9F /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		250E75AD01E5D2DA57366C30 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		2B0FB00E8C4A0E084B706D2B /* PushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManager.swift; sourceTree = "<group>"; };
 		307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListStore.swift; sourceTree = "<group>"; };
 		394B2DE19E0B835522393FD8 /* CallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreen.swift; sourceTree = "<group>"; };
 		40918434D2E1E21092E48D4B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */,
 				CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */,
+				2B0FB00E8C4A0E084B706D2B /* PushManager.swift */,
 				7A80A98DE129073BF00EB616 /* RedQueenApp.swift */,
 			);
 			path = App;
@@ -339,6 +342,7 @@
 				E986221F2D977525D0EFAB47 /* MainView.swift in Sources */,
 				549215002CC1C5752C9AB92A /* MessageBubble.swift in Sources */,
 				C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */,
+				C7A05DAED7611AE2D8C44A8A /* PushManager.swift in Sources */,
 				A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */,
 				436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */,
 				4BE51C29D9040FC1900B5AD5 /* Theme.swift in Sources */,
