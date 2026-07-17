@@ -32,6 +32,8 @@ struct MessageBubble: View {
                 .textSelection(.enabled)
         case .audio(let attachment):
             VoiceMessageRow(message: message, attachment: attachment)
+        case .image(let attachment):
+            ImageBubbleView(message: message, attachment: attachment)
         }
     }
 

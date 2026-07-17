@@ -6,9 +6,16 @@ struct ComposerView: View {
     /// When set, the composer offers voice recording while the field is empty.
     var recorder: VoiceRecorder?
     var onSendVoice: ((VoiceRecorder.Recording) -> Void)?
+    /// When set, the composer offers image attachments.
+    var pendingImages: Binding<[PendingImage]>?
+    var onPickLibrary: (() -> Void)?
+    var onPickCamera: (() -> Void)?
 
     var body: some View {
-        Group {
+        VStack(spacing: 0) {
+            if let pendingImages, !pendingImages.wrappedValue.isEmpty {
+                PendingImageStrip(images: pendingImages)
+            }
             if let recorder, recorder.isRecording {
                 recordingBar(recorder)
             } else {
@@ -22,6 +29,28 @@ struct ComposerView: View {
 
     private var inputBar: some View {
         HStack(alignment: .bottom, spacing: 8) {
+            if onPickLibrary != nil || onPickCamera != nil {
+                Menu {
+                    if let onPickLibrary {
+                        Button(action: onPickLibrary) {
+                            Label("Photo Library", systemImage: "photo.on.rectangle")
+                        }
+                    }
+                    if let onPickCamera {
+                        Button(action: onPickCamera) {
+                            Label("Camera", systemImage: "camera")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 26))
+                        .foregroundStyle(Color.reMuted)
+                }
+                .accessibilityLabel("Add attachment")
+                .padding(.leading, 8)
+                .padding(.bottom, 6)
+            }
+
             TextField(AppConfig.composerPlaceholder, text: $text, axis: .vertical)
                 .lineLimit(1...6)
                 .padding(.horizontal, 16)
@@ -105,6 +134,7 @@ struct ComposerView: View {
 
     private var canSend: Bool {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            || !(pendingImages?.wrappedValue.isEmpty ?? true)
     }
 
     private func sendIfPossible() {

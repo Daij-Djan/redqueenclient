@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 import MatrixRustSDK
 
 struct ChatView: View {
@@ -6,6 +7,7 @@ struct ChatView: View {
     /// Sent on arrival — the home-screen composer flow.
     var initialMessage: String?
     var initialRecording: VoiceRecorder.Recording?
+    var initialImages: [ImageProcessor.Processed] = []
 
     @Environment(AppSession.self) private var appSession
     @State private var store = TimelineStore()
@@ -15,6 +17,11 @@ struct ChatView: View {
     @State private var isShowingCall = false
     @State private var recorder = VoiceRecorder()
     @State private var audioPlayer = AudioPlayerService()
+    @State private var imageLoader = ImageLoaderService()
+    @State private var pendingImages: [PendingImage] = []
+    @State private var photoSelection: [PhotosPickerItem] = []
+    @State private var isShowingPhotoPicker = false
+    @State private var isShowingCamera = false
     /// Tracked via the bottom sentinel's lazy-container lifecycle; true while
     /// the user is at (or within the lazy buffer of) the end.
     @State private var isNearBottom = true
@@ -60,10 +67,14 @@ struct ChatView: View {
                 ComposerView(text: $draft,
                              onSend: { send(proxy: proxy) },
                              recorder: recorder,
-                             onSendVoice: { sendVoice($0, proxy: proxy) })
+                             onSendVoice: { sendVoice($0, proxy: proxy) },
+                             pendingImages: $pendingImages,
+                             onPickLibrary: { isShowingPhotoPicker = true },
+                             onPickCamera: cameraAvailable ? { isShowingCamera = true } : nil)
             }
             .background(REBackground())
             .environment(audioPlayer)
+            .environment(imageLoader)
             .onChange(of: store.messages.count) { _, _ in
                 // Stick to the bottom for our own messages, or whenever the
                 // user hasn't scrolled up to read history.
@@ -80,6 +91,28 @@ struct ChatView: View {
         .onChange(of: draft) { _, newValue in
             store.setTyping(!newValue.isEmpty)
         }
+        .photosPicker(isPresented: $isShowingPhotoPicker,
+                      selection: $photoSelection,
+                      maxSelectionCount: 6,
+                      matching: .images)
+        .onChange(of: photoSelection) { _, items in
+            guard !items.isEmpty else { return }
+            photoSelection = []
+            Task {
+                for item in items {
+                    guard let data = try? await item.loadTransferable(type: Data.self) else { continue }
+                    stageImage(data: data)
+                }
+            }
+        }
+        #if os(iOS)
+        .sheet(isPresented: $isShowingCamera) {
+            CameraPicker { data in
+                stageImage(data: data)
+            }
+            .ignoresSafeArea()
+        }
+        #endif
         .navigationTitle(room.displayName() ?? "Chat")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -106,11 +139,19 @@ struct ChatView: View {
         .task(id: room.id()) {
             store.detach()
             audioPlayer.client = appSession.client
+            imageLoader.client = appSession.client
             do {
                 try await store.attach(room: room, ownUserID: appSession.userID)
                 await store.markAsRead()
                 if !didSendInitialMessage {
-                    if let initialMessage {
+                    if !initialImages.isEmpty {
+                        didSendInitialMessage = true
+                        // Text (if any) rides along as the first image's caption.
+                        for (index, image) in initialImages.enumerated() {
+                            try store.sendImage(image, caption: index == 0 ? initialMessage : nil)
+                        }
+                        await NewChatService.autoName(room: room, firstMessage: initialMessage ?? "Image")
+                    } else if let initialMessage {
                         didSendInitialMessage = true
                         try await store.send(initialMessage)
                         await NewChatService.autoName(room: room, firstMessage: initialMessage)
@@ -131,6 +172,23 @@ struct ChatView: View {
         }
     }
 
+    private var cameraAvailable: Bool {
+        #if os(iOS)
+        CameraPicker.isAvailable
+        #else
+        false
+        #endif
+    }
+
+    private func stageImage(data: Data) {
+        guard let processed = try? ImageProcessor.processForUpload(data: data) else {
+            attachError = "Could not read that image."
+            return
+        }
+        pendingImages.append(PendingImage(processed: processed,
+                                          preview: ImageProcessor.previewImage(fileURL: processed.fileURL)))
+    }
+
     private func sendVoice(_ recording: VoiceRecorder.Recording, proxy: ScrollViewProxy) {
         do {
             try store.sendVoiceMessage(recording)
@@ -148,19 +206,31 @@ struct ChatView: View {
 
     private func send(proxy: ScrollViewProxy) {
         let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty else { return }
+        let images = pendingImages
+        guard !text.isEmpty || !images.isEmpty else { return }
         draft = ""
+        pendingImages = []
         Task {
             do {
-                try await store.send(text)
+                if images.isEmpty {
+                    try await store.send(text)
+                } else {
+                    // Composer text rides along as the first image's caption.
+                    for (index, image) in images.enumerated() {
+                        try store.sendImage(image.processed,
+                                            caption: index == 0 && !text.isEmpty ? text : nil)
+                    }
+                }
                 scrollToBottom(proxy)
                 // First message titles the conversation, ChatGPT-style.
                 if room.displayName() == "New chat" {
-                    await NewChatService.autoName(room: room, firstMessage: text)
+                    await NewChatService.autoName(room: room,
+                                                  firstMessage: text.isEmpty ? "Image" : text)
                 }
             } catch {
                 attachError = "Send failed: \(error.localizedDescription)"
                 draft = text
+                pendingImages = images
             }
         }
     }
