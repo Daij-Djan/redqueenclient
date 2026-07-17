@@ -28,10 +28,10 @@ targets:
       properties:
         # Lets iOS password managers offer credentials saved for the
         # homeserver domain on the login screen. Requires the matching
-        # apple-app-site-association file on the server.
+        # apple-app-site-association file on the server. Exactly this host —
+        # a bare-domain entry widens matching to sibling subdomains (gitlab…).
         com.apple.developer.associated-domains:
           - webcredentials:matrix.roesrath-kleineichen.de
-          - webcredentials:roesrath-kleineichen.de
     dependencies:
       - package: MatrixRustSDK
     settings:
