@@ -36,6 +36,19 @@ enum AppConfig {
     /// from the homeserver's .well-known (livekit.roesrath-kleineichen.de).
     static let defaultElementCallURL = "https://call.element.io"
 
+    /// Sygnal push gateway notify endpoint, overridable in Settings.
+    static let defaultPushGatewayURL = "https://matrix.roesrath-kleineichen.de/_matrix/push/v1/notify"
+
+    /// Pusher app ID as configured in Sygnal. Debug builds get APNs sandbox
+    /// tokens, so they must use the `.dev` entry (sandbox platform in Sygnal).
+    static var pusherAppID: String {
+        #if DEBUG
+        "info.pich.redqueen.ios.dev"
+        #else
+        "info.pich.redqueen.ios"
+        #endif
+    }
+
     /// Version of the bundled Matrix Rust SDK, to show in Settings.
     static var sdkVersion: String { MatrixRustSDK.sdkGitSha() }
 }

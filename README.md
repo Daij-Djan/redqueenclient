@@ -89,6 +89,12 @@ Defaults live in `RedQueen/Support/AppConfig.swift`:
 - For calls: `.well-known` advertises the LiveKit RTC focus
   (`org.matrix.msc4143.rtc_foci`), and the agent must join the MatrixRTC
   session for two-way audio.
+- **Push**: a Sygnal gateway at
+  `https://matrix.roesrath-kleineichen.de/_matrix/push/v1/notify` with APNs
+  app IDs `info.pich.redqueen.ios` (production) and `…ios.dev` (sandbox —
+  used by debug builds). Rooms are unencrypted, so full event content is
+  pushed and no Notification Service Extension is needed; taps deep-link to
+  the room.
 
 ## Project layout
 
@@ -134,6 +140,6 @@ places — swap these and you have your own branded agent client:
 
 ## Roadmap
 
-- Push notifications (Sygnal + Notification Service Extension)
 - Native macOS target
+- Notification Service Extension (needed only for E2EE rooms / richer notifications)
 - Agent-side niceties: transcript-based titles for voice-started chats

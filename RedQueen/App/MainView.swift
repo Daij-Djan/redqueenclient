@@ -16,6 +16,9 @@ struct ChatDestination: Hashable {
 struct MainView: View {
     @Environment(AppSession.self) private var appSession
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
+    @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
+
+    @State private var pushManager = PushManager.shared
 
     @State private var conversationList = ConversationListStore()
     @State private var path: [ChatDestination] = []
@@ -64,6 +67,15 @@ struct MainView: View {
             } catch {
                 errorMessage = "Sync failed: \(error.localizedDescription)"
             }
+            if let client = appSession.client {
+                await pushManager.start(client: client, gatewayURL: pushGatewayURL)
+            }
+        }
+        .onChange(of: pushManager.pendingRoomID) { _, roomID in
+            guard let roomID else { return }
+            pushManager.pendingRoomID = nil
+            isShowingHome = false
+            path = [ChatDestination(roomID: roomID)]
         }
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
