@@ -12,9 +12,20 @@ struct AudioAttachment {
     let isVoice: Bool
 }
 
+/// An image attachment on a message.
+struct ImageAttachment {
+    let source: MediaSource
+    let filename: String
+    let mimetype: String?
+    let width: UInt64?
+    let height: UInt64?
+    let caption: String?
+}
+
 enum ChatMessageContent {
     case text(String)
     case audio(AudioAttachment)
+    case image(ImageAttachment)
 }
 
 /// A renderable chat message derived from a timeline item.
@@ -34,6 +45,8 @@ struct ChatMessage: Identifiable, Equatable {
             return a == b
         case (.audio(let a), .audio(let b)):
             return a.filename == b.filename && a.duration == b.duration
+        case (.image(let a), .image(let b)):
+            return a.filename == b.filename && a.caption == b.caption
         default:
             return false
         }
@@ -113,6 +126,26 @@ final class TimelineStore {
                                           waveform: recording.waveform)
     }
 
+    /// Uploads and sends a processed image; the optional caption travels with
+    /// the image event (rendered under it, and in `body` for the agent).
+    func sendImage(_ processed: ImageProcessor.Processed, caption: String?) throws {
+        guard let timeline else { return }
+        let params = UploadParameters(source: .file(filename: processed.fileURL.path(percentEncoded: false)),
+                                      caption: caption,
+                                      formattedCaption: nil,
+                                      mentions: nil,
+                                      inReplyTo: nil)
+        let info = ImageInfo(height: processed.height,
+                             width: processed.width,
+                             mimetype: "image/jpeg",
+                             size: processed.size,
+                             thumbnailInfo: nil,
+                             thumbnailSource: nil,
+                             blurhash: processed.blurhash,
+                             isAnimated: false)
+        _ = try timeline.sendImage(params: params, thumbnailSource: nil, imageInfo: info)
+    }
+
     /// Announces our own typing state; the SDK debounces repeat calls.
     func setTyping(_ isTyping: Bool) {
         guard let room else { return }
@@ -171,6 +204,13 @@ final class TimelineStore {
                                              duration: audio.info?.duration,
                                              mimetype: audio.info?.mimetype,
                                              isVoice: audio.voice != nil))
+        case .image(let image):
+            content = .image(ImageAttachment(source: image.source,
+                                             filename: image.filename,
+                                             mimetype: image.info?.mimetype,
+                                             width: image.info?.width,
+                                             height: image.info?.height,
+                                             caption: image.caption))
         default:
             content = .text(message.body)
         }

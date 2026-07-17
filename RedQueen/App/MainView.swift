@@ -7,6 +7,7 @@ struct ChatDestination: Hashable {
     let roomID: String
     var initialMessage: String?
     var initialRecording: VoiceRecorder.Recording?
+    var initialImages: [ImageProcessor.Processed] = []
 }
 
 /// Cold start shows the home composer once; afterwards the root is the
@@ -34,7 +35,9 @@ struct MainView: View {
             Group {
                 if isShowingHome {
                     HomeView(isCreating: isCreatingChat,
-                             onSubmit: { startChat(sending: $0) },
+                             onSubmit: { text, images in
+                                 startChat(sending: text.isEmpty ? nil : text, images: images)
+                             },
                              onSubmitVoice: { startChat(sending: nil, recording: $0) },
                              onShowConversations: { isShowingHome = false })
                 } else {
@@ -45,7 +48,8 @@ struct MainView: View {
                 if let room = resolveRoom(destination.roomID) {
                     ChatView(room: room,
                              initialMessage: destination.initialMessage,
-                             initialRecording: destination.initialRecording)
+                             initialRecording: destination.initialRecording,
+                             initialImages: destination.initialImages)
                 } else {
                     ContentUnavailableView("Conversation not found",
                                            systemImage: "bubble.left",
@@ -177,7 +181,9 @@ struct MainView: View {
         return try? appSession.client?.getRoom(roomId: roomID)
     }
 
-    private func startChat(sending message: String?, recording: VoiceRecorder.Recording? = nil) {
+    private func startChat(sending message: String?,
+                           recording: VoiceRecorder.Recording? = nil,
+                           images: [ImageProcessor.Processed] = []) {
         guard let client = appSession.client, !isCreatingChat else { return }
         isCreatingChat = true
         Task {
@@ -188,7 +194,8 @@ struct MainView: View {
                 isShowingHome = false
                 path.append(ChatDestination(roomID: room.id(),
                                             initialMessage: message,
-                                            initialRecording: recording))
+                                            initialRecording: recording,
+                                            initialImages: images))
             } catch {
                 errorMessage = "Could not create chat: \(error.localizedDescription)"
             }
