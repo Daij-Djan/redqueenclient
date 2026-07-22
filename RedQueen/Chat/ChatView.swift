@@ -55,7 +55,9 @@ struct ChatView: View {
                 }
                 .contentMargins(.vertical, 12, for: .scrollContent)
                 .defaultScrollAnchor(.bottom)
+                #if os(iOS)
                 .scrollDismissesKeyboard(.interactively)
+                #endif
                 .refreshable { await store.paginateBackwards() }
 
                 if let attachError {
