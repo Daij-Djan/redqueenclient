@@ -6,6 +6,7 @@ struct SettingsView: View {
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
     @AppStorage("elementCallURL") private var elementCallURL = AppConfig.defaultElementCallURL
     @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
+    @AppStorage("showIDs") private var showIDs = false
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,12 @@ struct SettingsView: View {
                     Text("Push Notifications")
                 } footer: {
                     Text("Sygnal push gateway notify endpoint. Takes effect at next launch.")
+                }
+
+                Section {
+                    Toggle("Show IDs", isOn: $showIDs)
+                } footer: {
+                    Text("Shows the Matrix room ID under each conversation and the event ID under each message — useful for debugging.")
                 }
 
                 Section {

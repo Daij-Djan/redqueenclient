@@ -5,21 +5,29 @@ import SwiftUI
 struct MessageBubble: View {
     let message: ChatMessage
 
+    @AppStorage("showIDs") private var showIDs = false
+
     var body: some View {
         if message.isOwn {
             HStack {
                 Spacer(minLength: 60)
-                bubbleContent
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(Color.reSurface, in: .rect(cornerRadius: 18))
+                VStack(alignment: .trailing, spacing: 2) {
+                    bubbleContent
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color.reSurface, in: .rect(cornerRadius: 18))
+                    idLabel
+                }
             }
         } else {
             HStack(alignment: .top, spacing: 10) {
                 BotAvatarView(size: 28)
-                bubbleContent
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 4)
+                VStack(alignment: .leading, spacing: 2) {
+                    bubbleContent
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    idLabel
+                }
+                .padding(.top, 4)
             }
         }
     }
@@ -34,6 +42,16 @@ struct MessageBubble: View {
             VoiceMessageRow(message: message, attachment: attachment)
         case .image(let attachment):
             ImageBubbleView(message: message, attachment: attachment)
+        }
+    }
+
+    @ViewBuilder
+    private var idLabel: some View {
+        if showIDs {
+            Text(message.eventID ?? message.id)
+                .font(.caption2)
+                .foregroundStyle(Color.reMuted)
+                .textSelection(.enabled)
         }
     }
 
