@@ -1,12 +1,17 @@
 import SwiftUI
 
 struct SettingsView: View {
+    let conversationList: ConversationListStore
+
     @Environment(AppSession.self) private var appSession
     @Environment(\.dismiss) private var dismiss
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
     @AppStorage("elementCallURL") private var elementCallURL = AppConfig.defaultElementCallURL
     @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
     @AppStorage("showIDs") private var showIDs = false
+    @State private var isShowingDeleteAllConfirmation = false
+    @State private var isDeletingAll = false
+    @State private var deleteAllError: String?
 
     var body: some View {
         NavigationStack {
@@ -57,6 +62,24 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Button(role: .destructive) {
+                        isShowingDeleteAllConfirmation = true
+                    } label: {
+                        if isDeletingAll {
+                            HStack {
+                                ProgressView()
+                                Text("Deleting…")
+                            }
+                        } else {
+                            Text("Delete All Conversations")
+                        }
+                    }
+                    .disabled(isDeletingAll)
+                } footer: {
+                    Text("Leaves and removes every conversation on the server. This cannot be undone.")
+                }
+
+                Section {
                     Button("Log Out", role: .destructive) {
                         Task {
                             await appSession.logout()
@@ -81,6 +104,30 @@ struct SettingsView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
                 }
+            }
+            .confirmationDialog("Delete all conversations?",
+                                isPresented: $isShowingDeleteAllConfirmation,
+                                titleVisibility: .visible) {
+                Button("Delete All Conversations", role: .destructive) {
+                    Task {
+                        isDeletingAll = true
+                        let failures = await conversationList.deleteAllConversations()
+                        isDeletingAll = false
+                        if failures > 0 {
+                            deleteAllError = "\(failures) conversation(s) could not be deleted."
+                        }
+                    }
+                }
+            } message: {
+                Text("This leaves and removes every conversation on the server. This cannot be undone.")
+            }
+            .alert("Something went wrong", isPresented: .init(
+                get: { deleteAllError != nil },
+                set: { if !$0 { deleteAllError = nil } }
+            )) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(deleteAllError ?? "")
             }
         }
     }
