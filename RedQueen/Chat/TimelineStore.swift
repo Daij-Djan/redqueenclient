@@ -104,6 +104,12 @@ final class TimelineStore {
                 self.typingUserIDs = userIDs.filter { $0 != self.ownUserID }
             }
         })
+
+        // `timeline()` only gives a *live* timeline — it doesn't backfill
+        // existing history on its own. Without an initial pagination, a
+        // freshly (re)attached room shows nothing until the user manually
+        // pulls to refresh, even if it already has messages.
+        Task { [weak self] in await self?.paginateBackwards() }
     }
 
     func detach() {
