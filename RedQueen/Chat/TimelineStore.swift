@@ -69,6 +69,8 @@ final class TimelineStore {
     private var timeline: Timeline?
     private var listenerHandle: TaskHandle?
     private var typingHandle: TaskHandle?
+    private var diffContinuation: AsyncStream<[TimelineDiff]>.Continuation?
+    private var diffTask: Task<Void, Never>?
 
     func attach(room: Room, ownUserID: String?) async throws {
         self.room = room
@@ -76,8 +78,23 @@ final class TimelineStore {
 
         let timeline = try await room.timeline()
         self.timeline = timeline
-        let listener = TimelineListenerProxy { [weak self] diffs in
-            Task { @MainActor in self?.apply(diffs) }
+
+        // The SDK invokes the listener from its own background thread with
+        // no ordering guarantee between independently-scheduled
+        // `Task { @MainActor in }` hops — a later diff batch could get
+        // applied before an earlier one, e.g. a `.clear` landing after the
+        // repopulation diff it should have preceded, wiping the timeline
+        // for good with nothing left to repopulate it. Route every batch
+        // through one FIFO stream instead, drained by a single ordered task.
+        let (stream, continuation) = AsyncStream<[TimelineDiff]>.makeStream()
+        diffContinuation = continuation
+        diffTask = Task { @MainActor [weak self] in
+            for await diffs in stream {
+                self?.apply(diffs)
+            }
+        }
+        let listener = TimelineListenerProxy { diffs in
+            continuation.yield(diffs)
         }
         listenerHandle = await timeline.addListener(listener: listener)
 
@@ -94,6 +111,10 @@ final class TimelineStore {
         listenerHandle = nil
         typingHandle?.cancel()
         typingHandle = nil
+        diffContinuation?.finish()
+        diffContinuation = nil
+        diffTask?.cancel()
+        diffTask = nil
         timeline = nil
         room = nil
         items = []

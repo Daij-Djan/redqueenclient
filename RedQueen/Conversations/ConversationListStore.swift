@@ -31,12 +31,27 @@ final class ConversationListStore {
     private var lastBadgeCount = -1
     private var agentUserID = ""
     private var entriesHandle: RoomListEntriesWithDynamicAdaptersResult?
+    private var updateContinuation: AsyncStream<[RoomListEntriesUpdate]>.Continuation?
+    private var updateTask: Task<Void, Never>?
 
     func start(syncService: SyncService, agentUserID: String) async throws {
         self.agentUserID = agentUserID
         let roomList = try await syncService.roomListService().allRooms()
-        let listener = RoomListListenerProxy { [weak self] updates in
-            Task { @MainActor in self?.apply(updates) }
+
+        // Same ordering hazard as `TimelineStore`'s diff listener: independent
+        // `Task { @MainActor in }` hops per callback give no FIFO guarantee,
+        // so a later batch of room-list updates could apply before an
+        // earlier one and desync `rooms` from what the SDK actually holds.
+        // Route through a single ordered stream instead.
+        let (stream, continuation) = AsyncStream<[RoomListEntriesUpdate]>.makeStream()
+        updateContinuation = continuation
+        updateTask = Task { @MainActor [weak self] in
+            for await updates in stream {
+                self?.apply(updates)
+            }
+        }
+        let listener = RoomListListenerProxy { updates in
+            continuation.yield(updates)
         }
         entriesHandle = roomList.entriesWithDynamicAdapters(pageSize: 200, listener: listener)
         _ = entriesHandle?.controller().setFilter(kind: .all(filters: [.nonLeft]))
