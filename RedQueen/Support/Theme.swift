@@ -88,3 +88,29 @@ struct BotAvatarView: View {
     .padding(40)
     .background(Color.reBackground)
 }
+
+/// The laser-red unread pill used in the conversation list. Caps display at
+/// "99+" rather than growing unbounded.
+struct UnreadBadge: View {
+    var count: UInt64
+
+    var body: some View {
+        Text(count > 99 ? "99+" : "\(count)")
+            .font(.caption2.weight(.bold))
+            .foregroundStyle(.white)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(Capsule().fill(Color.reAccent))
+            .shadow(color: Color.reAccent.opacity(0.6), radius: 4)
+    }
+}
+
+#Preview("Unread badge") {
+    HStack(spacing: 20) {
+        UnreadBadge(count: 1)
+        UnreadBadge(count: 12)
+        UnreadBadge(count: 140)
+    }
+    .padding(40)
+    .background(Color.reBackground)
+}

@@ -1,0 +1,138 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "ACTION_FROM_USER" : {
+      "comment" : "APNs loc-key (Sygnal) for a /me action outside a named room. loc-args: [from_display, action_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "ACTION_FROM_USER_IN_ROOM" : {
+      "comment" : "APNs loc-key (Sygnal) for a /me action in a named room. loc-args: [room_display, from_display, action_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ %3$@ in %1$@"
+          }
+        }
+      }
+    },
+    "IMAGE_FROM_USER" : {
+      "comment" : "APNs loc-key (Sygnal) for an image message outside a named room. loc-args: [from_display, content_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sent %2$@"
+          }
+        }
+      }
+    },
+    "IMAGE_FROM_USER_IN_ROOM" : {
+      "comment" : "APNs loc-key (Sygnal) for an image message in a named room. loc-args: [from_display, content_display, room_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sent %2$@ in %3$@"
+          }
+        }
+      }
+    },
+    "MSG_FROM_USER" : {
+      "comment" : "APNs loc-key (Sygnal) for a generic/unknown notification. loc-args: [from_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sent a message"
+          }
+        }
+      }
+    },
+    "MSG_FROM_USER_IN_ROOM" : {
+      "comment" : "APNs loc-key (Sygnal) for a message with no content preview, in a named room. loc-args: [from_display, room_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ in %2$@"
+          }
+        }
+      }
+    },
+    "MSG_FROM_USER_IN_ROOM_WITH_CONTENT" : {
+      "comment" : "APNs loc-key (Sygnal) for a text message in a named room. loc-args: [from_display, room_display, content_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ in %2$@: %3$@"
+          }
+        }
+      }
+    },
+    "MSG_FROM_USER_WITH_CONTENT" : {
+      "comment" : "APNs loc-key (Sygnal) for a text message with no room name. loc-args: [from_display, content_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "USER_INVITE_TO_CHAT" : {
+      "comment" : "APNs loc-key (Sygnal) for a room invite with no room name. loc-args: [from_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ invited you to chat"
+          }
+        }
+      }
+    },
+    "USER_INVITE_TO_NAMED_ROOM" : {
+      "comment" : "APNs loc-key (Sygnal) for an invite to a named room. loc-args: [from_display, room_name]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ invited you to %2$@"
+          }
+        }
+      }
+    },
+    "VIDEO_CALL_FROM_USER" : {
+      "comment" : "APNs loc-key (Sygnal) for an incoming video call. loc-args: [from_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ is calling (video)"
+          }
+        }
+      }
+    },
+    "VOICE_CALL_FROM_USER" : {
+      "comment" : "APNs loc-key (Sygnal) for an incoming voice call. loc-args: [from_display]",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ is calling"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

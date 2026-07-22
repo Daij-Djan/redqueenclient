@@ -81,6 +81,10 @@ struct ChatView: View {
                 if store.messages.last?.isOwn == true || isNearBottom {
                     scrollToBottom(proxy)
                 }
+                // The room is on-screen, so any new message just arrived
+                // straight into view — keep the read receipt current instead
+                // of letting it (and the badge) drift while we're right here.
+                Task { await store.markAsRead() }
             }
             .onChange(of: store.typingUserIDs.isEmpty) { _, isEmpty in
                 if !isEmpty && isNearBottom {
@@ -165,7 +169,13 @@ struct ChatView: View {
                 attachError = "Could not load conversation: \(error.localizedDescription)"
             }
         }
+        .onAppear {
+            PushManager.shared.activeRoomID = room.id()
+        }
         .onDisappear {
+            if PushManager.shared.activeRoomID == room.id() {
+                PushManager.shared.activeRoomID = nil
+            }
             _ = recorder.stop(discard: true)
             audioPlayer.stop()
             store.detach()

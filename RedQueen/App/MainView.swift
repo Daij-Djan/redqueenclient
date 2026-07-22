@@ -15,6 +15,7 @@ struct ChatDestination: Hashable {
 /// the list.
 struct MainView: View {
     @Environment(AppSession.self) private var appSession
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
     @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
 
@@ -76,6 +77,11 @@ struct MainView: View {
             pushManager.pendingRoomID = nil
             isShowingHome = false
             path = [ChatDestination(roomID: roomID)]
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                conversationList.resyncBadge()
+            }
         }
         .sheet(isPresented: $isShowingSettings) {
             SettingsView()
@@ -159,8 +165,15 @@ struct MainView: View {
 
     private func conversationRow(_ conversation: Conversation, icon: String) -> some View {
         NavigationLink(value: ChatDestination(roomID: conversation.id)) {
-            Label(conversation.displayName, systemImage: icon)
-                .lineLimit(1)
+            HStack {
+                Label(conversation.displayName, systemImage: icon)
+                    .lineLimit(1)
+                    .fontWeight(conversation.unreadCount > 0 ? .semibold : .regular)
+                if conversation.unreadCount > 0 {
+                    Spacer()
+                    UnreadBadge(count: conversation.unreadCount)
+                }
+            }
         }
         .swipeActions(edge: .trailing) {
             Button(role: .destructive) {
