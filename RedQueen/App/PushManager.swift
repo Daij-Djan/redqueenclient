@@ -18,6 +18,11 @@ final class PushManager: NSObject, UNUserNotificationCenterDelegate {
     /// Room to open because the user tapped a notification.
     var pendingRoomID: String?
 
+    /// The room currently on-screen in `ChatView`, if any — set/cleared by
+    /// the view itself. Pushes for this room are already visible in the
+    /// live timeline, so they shouldn't also bank a notification or badge.
+    var activeRoomID: String?
+
     private var client: Client?
     private var gatewayURL = AppConfig.defaultPushGatewayURL
 
@@ -72,17 +77,28 @@ final class PushManager: NSObject, UNUserNotificationCenterDelegate {
 
     // MARK: - UNUserNotificationCenterDelegate
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        [.banner, .sound, .badge]
+    // These must stay MainActor-isolated (not `nonisolated`) — the async
+    // delegate methods have an undocumented requirement that they complete
+    // on the main thread, or UIKit's internal state-restoration bookkeeping
+    // for the background/notification event aborts with an assertion
+    // failure in `_updateStateRestorationArchiveForBackgroundEvent`.
+    /// No `.badge` here on purpose — the push payload's own badge count
+    /// (whatever Sygnal/Synapse last computed) would otherwise overwrite the
+    /// real per-room unread total `ConversationListStore` maintains. Also
+    /// stays silent entirely for the room the user currently has open.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        let roomID = notification.request.content.userInfo["room_id"] as? String
+        if roomID != nil, roomID == activeRoomID {
+            return []
+        }
+        return [.banner, .sound]
     }
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            didReceive response: UNNotificationResponse) async {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
         guard let roomID = userInfo["room_id"] as? String else { return }
-        await MainActor.run {
-            pendingRoomID = roomID
-        }
+        pendingRoomID = roomID
     }
 }

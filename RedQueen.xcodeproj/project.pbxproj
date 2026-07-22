@@ -30,6 +30,7 @@
 		A64DD318EFF59A52F41BF719 /* CallWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3154A4B9AF14291E87038 /* CallWebView.swift */; };
 		C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
 		C43630A0C6C8F15BC1E39CBA /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */; };
+		C592DD79FA68ACFA86387206 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 49810F88F7A5F97DEFCE7C87 /* Localizable.xcstrings */; };
 		C7A05DAED7611AE2D8C44A8A /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FB00E8C4A0E084B706D2B /* PushManager.swift */; };
 		C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */; };
 		D2A19E4969B80BF46304C580 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB78092F84B21048655734B /* AuthService.swift */; };
@@ -60,6 +61,7 @@
 		394B2DE19E0B835522393FD8 /* CallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreen.swift; sourceTree = "<group>"; };
 		40918434D2E1E21092E48D4B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatService.swift; sourceTree = "<group>"; };
+		49810F88F7A5F97DEFCE7C87 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RedQueenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EB78092F84B21048655734B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		610D9D9D815246FB64A69037 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */,
+				49810F88F7A5F97DEFCE7C87 /* Localizable.xcstrings */,
 				6E4C3355EC7AD4E741FA369C /* Theme.swift */,
 			);
 			path = Support;
@@ -312,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AFA06F18C236C5FFB6E7F7F /* Assets.xcassets in Resources */,
+				C592DD79FA68ACFA86387206 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
