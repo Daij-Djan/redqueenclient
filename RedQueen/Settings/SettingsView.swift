@@ -26,7 +26,9 @@ struct SettingsView: View {
                     TextField(AppConfig.defaultAgentUserID(ownUserID: appSession.userID),
                               text: $agentUserIDOverride)
                         .autocorrectionDisabled()
+                        #if os(iOS)
                         .textInputAutocapitalization(.never)
+                        #endif
                 } header: {
                     Text("Agent")
                 } footer: {
@@ -36,8 +38,10 @@ struct SettingsView: View {
                 Section {
                     TextField(AppConfig.defaultElementCallURL, text: $elementCallURL)
                         .autocorrectionDisabled()
+                        #if os(iOS)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
+                        #endif
                 } header: {
                     Text("Voice & Video")
                 } footer: {
@@ -47,8 +51,10 @@ struct SettingsView: View {
                 Section {
                     TextField(AppConfig.defaultPushGatewayURL, text: $pushGatewayURL)
                         .autocorrectionDisabled()
+                        #if os(iOS)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.URL)
+                        #endif
                 } header: {
                     Text("Push Notifications")
                 } footer: {

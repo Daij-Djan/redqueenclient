@@ -30,9 +30,13 @@ struct LoginView: View {
                 TextField("Username", text: $username)
                     .textContentType(.username)
                     .autocorrectionDisabled()
+                    #if os(iOS)
                     .textInputAutocapitalization(.never)
+                    #endif
                     .focused($focusedField, equals: .username)
+                    #if os(iOS)
                     .submitLabel(.next)
+                    #endif
                     .onSubmit { focusedField = .password }
                     .padding(14)
                     .background(Color.reSurface, in: .rect(cornerRadius: 12))
@@ -40,7 +44,9 @@ struct LoginView: View {
                 SecureField("Password", text: $password)
                     .textContentType(.password)
                     .focused($focusedField, equals: .password)
+                    #if os(iOS)
                     .submitLabel(.go)
+                    #endif
                     .onSubmit { logIn() }
                     .padding(14)
                     .background(Color.reSurface, in: .rect(cornerRadius: 12))

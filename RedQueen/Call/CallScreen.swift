@@ -19,6 +19,8 @@ struct CallScreen: View {
                 #if os(iOS)
                 CallWebView(url: url, model: model)
                     .ignoresSafeArea(edges: .bottom)
+                #elseif os(macOS)
+                CallWebView(url: url, model: model)
                 #endif
             } else if let errorMessage = model.errorMessage {
                 VStack(spacing: 12) {

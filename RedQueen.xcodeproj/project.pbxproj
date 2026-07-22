@@ -8,37 +8,67 @@
 
 /* Begin PBXBuildFile section */
 		0070FF4E9DA7964142B96722 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250E75AD01E5D2DA57366C30 /* ChatView.swift */; };
+		0483FA40A4B26276317FBAA2 /* VoiceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711B408D0D69196CE10AE8BA /* VoiceRecorder.swift */; };
+		0528A6BECC8D62FC4D004C50 /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FB00E8C4A0E084B706D2B /* PushManager.swift */; };
+		0FE36EA001E6D2A3971B48AC /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */; };
 		18836FA68D01300EF7CDA429 /* ImageAttachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2869CF4A313A0640C363E5 /* ImageAttachments.swift */; };
+		25CC89582222C01DBA8FE897 /* RedQueenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A80A98DE129073BF00EB616 /* RedQueenApp.swift */; };
 		2D2FC16EBE4FCD5C93ABDA78 /* CallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394B2DE19E0B835522393FD8 /* CallScreen.swift */; };
+		2D73C777AA0C584F8441E662 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3F52E9700722F4FBC93F49 /* LoginView.swift */; };
 		303B4284142F80CF44AA6888 /* MatrixRustSDK in Frameworks */ = {isa = PBXBuildFile; productRef = DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */; };
+		3C1D4536FF05BAB81AF6ECFC /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */; };
 		436293E7098EF8F0DB938490 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3037431103223EDCC69DF21 /* SettingsView.swift */; };
 		49AA7F72D4CA2FDE0361FA29 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */; };
+		4B8C373513086E4CDD561DD6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4C3355EC7AD4E741FA369C /* Theme.swift */; };
 		4BE51C29D9040FC1900B5AD5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4C3355EC7AD4E741FA369C /* Theme.swift */; };
+		4C984C2F80A6D5672BE07F26 /* CallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394B2DE19E0B835522393FD8 /* CallScreen.swift */; };
+		502962563D12EB88283F52AB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 49810F88F7A5F97DEFCE7C87 /* Localizable.xcstrings */; };
+		519539FDFCC8D032C113CF16 /* ImageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719D048135AD95C602763E54 /* ImageBubbleView.swift */; };
 		549215002CC1C5752C9AB92A /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4A4CC3B917F38B2C84D45F /* MessageBubble.swift */; };
+		5F8D40E7925922F3E16634F3 /* MatrixRustSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 48FD689A347C10D7C8B90444 /* MatrixRustSDK */; };
 		651C6E8900D1D46FFFC4299E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40918434D2E1E21092E48D4B /* HomeView.swift */; };
 		6613D0B7F3351E6B5B2B9B69 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B07F521F42641269A6BD /* AudioPlayerService.swift */; };
 		6BC969C8BA4423751F6E1D73 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80CB37637C57A5E2EF1054B /* ComposerView.swift */; };
 		6DBE7733BB78111426BEB2FF /* ImageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719D048135AD95C602763E54 /* ImageBubbleView.swift */; };
+		705998C5784B4F932FFF2131 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */; };
 		73BB0801D7606ACC28601EA3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3F52E9700722F4FBC93F49 /* LoginView.swift */; };
+		73FFCA560B75A4A004AF92A3 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D9D9D815246FB64A69037 /* KeychainStore.swift */; };
 		76AA0171622F657664A9BB98 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D9D9D815246FB64A69037 /* KeychainStore.swift */; };
+		84EDE0E03A5590A5D16D55CF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3037431103223EDCC69DF21 /* SettingsView.swift */; };
+		857283BC7AD5598D643E0198 /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
+		899D6C7D606B3040C84AF1F8 /* NewChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */; };
 		8AFA06F18C236C5FFB6E7F7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFAE2F535A9145E66A08233B /* Assets.xcassets */; };
+		8BBD0ADBC1833DCE7C20212B /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2440A0C17019D0A540486E9F /* CameraPicker.swift */; };
 		8CA88489BA39B2E9549ABDA8 /* CallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834A391E5418D3E78D15D32B /* CallModel.swift */; };
 		8DAED16163DA8AFAB684FA2F /* BlurHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F6DF7EBF532E4DF8756D5 /* BlurHash.swift */; };
 		8FE1ED8C216C8DA78820EDB5 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C3AEB0106E3E2B7C65B5ABD /* AppSession.swift */; };
+		92C3C9E66ACB7A7398C6A268 /* BlurHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8F6DF7EBF532E4DF8756D5 /* BlurHash.swift */; };
+		94012D1CD104A7FD011D37A2 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250E75AD01E5D2DA57366C30 /* ChatView.swift */; };
 		A07C8DB9E775EAA76456B0A0 /* RedQueenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A80A98DE129073BF00EB616 /* RedQueenApp.swift */; };
 		A2D25B84B890E40559100010 /* VoiceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711B408D0D69196CE10AE8BA /* VoiceRecorder.swift */; };
+		A433A983509779F4BC7B5DDA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40918434D2E1E21092E48D4B /* HomeView.swift */; };
+		A4AFAF1844098FFBBB8C9DE1 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2F3A842FFCC94B8A783B3 /* TypingIndicatorView.swift */; };
 		A64DD318EFF59A52F41BF719 /* CallWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3154A4B9AF14291E87038 /* CallWebView.swift */; };
+		AF06D53D716E8CB0B1029949 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B07F521F42641269A6BD /* AudioPlayerService.swift */; };
+		B3DA5FAECBDD53B691EA8186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB78092F84B21048655734B /* AuthService.swift */; };
+		B7AA74E55DFC7D3163DCB326 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */; };
+		C1C6E6C19B038FDEFB966FF7 /* ConversationListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */; };
 		C3FEE99B0EADF10C4618C81A /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B448D9E3C3A4761F34E2289D /* TimelineStore.swift */; };
 		C43630A0C6C8F15BC1E39CBA /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9784A3D8AAFD78A4441C1D /* KeychainStoreTests.swift */; };
 		C592DD79FA68ACFA86387206 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 49810F88F7A5F97DEFCE7C87 /* Localizable.xcstrings */; };
+		C6830074B3E8DD8800522760 /* ComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80CB37637C57A5E2EF1054B /* ComposerView.swift */; };
+		C6D441A694F5F909A5801D4A /* ImageAttachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2869CF4A313A0640C363E5 /* ImageAttachments.swift */; };
 		C7A05DAED7611AE2D8C44A8A /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FB00E8C4A0E084B706D2B /* PushManager.swift */; };
 		C9D61477C960954CD7B9D8DC /* NewChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */; };
+		CB9F218A2FA75A6245BDEC65 /* CallWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3154A4B9AF14291E87038 /* CallWebView.swift */; };
 		D2A19E4969B80BF46304C580 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB78092F84B21048655734B /* AuthService.swift */; };
 		D6F17CC00C722FC6F6F74376 /* RedQueenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C166F7C0AB4A80E36B641 /* RedQueenTests.swift */; };
 		DC9BFA64A902A5E192E018B4 /* ConversationListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */; };
 		E12E33B325B676BE7F4773E9 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */; };
 		E986221F2D977525D0EFAB47 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */; };
 		EC82D8637286ABB702E89DAC /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2440A0C17019D0A540486E9F /* CameraPicker.swift */; };
+		EE12B7BF23540890E9B2809B /* CallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834A391E5418D3E78D15D32B /* CallModel.swift */; };
+		F9D28F8F4E60E5DF101B2AD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFAE2F535A9145E66A08233B /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +88,7 @@
 		250E75AD01E5D2DA57366C30 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		2B0FB00E8C4A0E084B706D2B /* PushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushManager.swift; sourceTree = "<group>"; };
 		307F8B9F4C1BCC02A1BDFFD8 /* ConversationListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListStore.swift; sourceTree = "<group>"; };
+		3296A04841B352AAA62744C6 /* RedQueenMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RedQueenMac.entitlements; sourceTree = "<group>"; };
 		394B2DE19E0B835522393FD8 /* CallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallScreen.swift; sourceTree = "<group>"; };
 		40918434D2E1E21092E48D4B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		464D384A3CA2B10DEC2EA6B9 /* NewChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatService.swift; sourceTree = "<group>"; };
@@ -79,6 +110,7 @@
 		A80CB37637C57A5E2EF1054B /* ComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerView.swift; sourceTree = "<group>"; };
 		B448D9E3C3A4761F34E2289D /* TimelineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStore.swift; sourceTree = "<group>"; };
 		B799E2B40C1E36E5BD223AA2 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		BEE7CB8CBFF54F7CF9E25F55 /* RedQueenMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedQueenMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3037431103223EDCC69DF21 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CDD1B46B8B5D9054D8A22DC4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D5F3154A4B9AF14291E87038 /* CallWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWebView.swift; sourceTree = "<group>"; };
@@ -94,6 +126,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				303B4284142F80CF44AA6888 /* MatrixRustSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2F5957514D56E094781CCB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F8D40E7925922F3E16634F3 /* MatrixRustSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				F7FDB99DD7AA0FAE72D80B0B /* RedQueen.app */,
+				BEE7CB8CBFF54F7CF9E25F55 /* RedQueenMac.app */,
 				57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */,
 			);
 			name = Products;
@@ -215,6 +256,7 @@
 				2ED6EC063E02C20D9F811AA2 /* Settings */,
 				D50ED0C19E24C80326975228 /* Support */,
 				929451A2AE050D2346CDBC17 /* RedQueen.entitlements */,
+				3296A04841B352AAA62744C6 /* RedQueenMac.entitlements */,
 			);
 			path = RedQueen;
 			sourceTree = "<group>";
@@ -269,6 +311,26 @@
 			productReference = 57137EFA24BB90116AEDDB0C /* RedQueenTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B18E7072E8F246BEAD84615B /* RedQueenMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2762D085876F9390AE3FE6E0 /* Build configuration list for PBXNativeTarget "RedQueenMac" */;
+			buildPhases = (
+				5ADD07CD06C54E2BB4101907 /* Sources */,
+				843C6DEA7D9CCEA9EBEBC8B9 /* Resources */,
+				6C2F5957514D56E094781CCB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RedQueenMac;
+			packageProductDependencies = (
+				48FD689A347C10D7C8B90444 /* MatrixRustSDK */,
+			);
+			productName = RedQueenMac;
+			productReference = BEE7CB8CBFF54F7CF9E25F55 /* RedQueenMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -282,6 +344,9 @@
 						DevelopmentTeam = QKGXKAB6MT;
 					};
 					1550FB2B268CBBBDA9046095 = {
+						DevelopmentTeam = QKGXKAB6MT;
+					};
+					B18E7072E8F246BEAD84615B = {
 						DevelopmentTeam = QKGXKAB6MT;
 					};
 				};
@@ -304,12 +369,22 @@
 			projectRoot = "";
 			targets = (
 				12B9434C2E941FBE43AC99C6 /* RedQueen */,
+				B18E7072E8F246BEAD84615B /* RedQueenMac */,
 				1550FB2B268CBBBDA9046095 /* RedQueenTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		843C6DEA7D9CCEA9EBEBC8B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9D28F8F4E60E5DF101B2AD2 /* Assets.xcassets in Resources */,
+				502962563D12EB88283F52AB /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F970C3167B83C6D6F316AE24 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +440,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5ADD07CD06C54E2BB4101907 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				705998C5784B4F932FFF2131 /* AppConfig.swift in Sources */,
+				0FE36EA001E6D2A3971B48AC /* AppSession.swift in Sources */,
+				AF06D53D716E8CB0B1029949 /* AudioPlayerService.swift in Sources */,
+				B3DA5FAECBDD53B691EA8186 /* AuthService.swift in Sources */,
+				92C3C9E66ACB7A7398C6A268 /* BlurHash.swift in Sources */,
+				EE12B7BF23540890E9B2809B /* CallModel.swift in Sources */,
+				4C984C2F80A6D5672BE07F26 /* CallScreen.swift in Sources */,
+				CB9F218A2FA75A6245BDEC65 /* CallWebView.swift in Sources */,
+				8BBD0ADBC1833DCE7C20212B /* CameraPicker.swift in Sources */,
+				94012D1CD104A7FD011D37A2 /* ChatView.swift in Sources */,
+				C6830074B3E8DD8800522760 /* ComposerView.swift in Sources */,
+				C1C6E6C19B038FDEFB966FF7 /* ConversationListStore.swift in Sources */,
+				A433A983509779F4BC7B5DDA /* HomeView.swift in Sources */,
+				C6D441A694F5F909A5801D4A /* ImageAttachments.swift in Sources */,
+				519539FDFCC8D032C113CF16 /* ImageBubbleView.swift in Sources */,
+				73FFCA560B75A4A004AF92A3 /* KeychainStore.swift in Sources */,
+				2D73C777AA0C584F8441E662 /* LoginView.swift in Sources */,
+				B7AA74E55DFC7D3163DCB326 /* MainView.swift in Sources */,
+				3C1D4536FF05BAB81AF6ECFC /* MessageBubble.swift in Sources */,
+				899D6C7D606B3040C84AF1F8 /* NewChatService.swift in Sources */,
+				0528A6BECC8D62FC4D004C50 /* PushManager.swift in Sources */,
+				25CC89582222C01DBA8FE897 /* RedQueenApp.swift in Sources */,
+				84EDE0E03A5590A5D16D55CF /* SettingsView.swift in Sources */,
+				4B8C373513086E4CDD561DD6 /* Theme.swift in Sources */,
+				857283BC7AD5598D643E0198 /* TimelineStore.swift in Sources */,
+				A4AFAF1844098FFBBB8C9DE1 /* TypingIndicatorView.swift in Sources */,
+				0483FA40A4B26276317FBAA2 /* VoiceRecorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -376,6 +485,27 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		07A2F03102DF91AAF6483BEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedQueen/RedQueenMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Red Queen uses the camera for video calls.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Red Queen uses the microphone for voice calls with the agent.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen;
+				PRODUCT_NAME = RedQueen;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		6429E1E2482047B55FDCE2CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -466,11 +596,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -556,15 +686,36 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F313B6C5B6D6F82BA51CDA81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RedQueen/RedQueenMac.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Red Queen uses the camera for video calls.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Red Queen uses the microphone for voice calls with the agent.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = info.pich.redqueen;
+				PRODUCT_NAME = RedQueen;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -588,6 +739,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2762D085876F9390AE3FE6E0 /* Build configuration list for PBXNativeTarget "RedQueenMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F313B6C5B6D6F82BA51CDA81 /* Debug */,
+				07A2F03102DF91AAF6483BEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		647366BBF4B94EBEAC935923 /* Build configuration list for PBXNativeTarget "RedQueen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -629,6 +789,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		48FD689A347C10D7C8B90444 /* MatrixRustSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 587AFB2A6FD459546CD660F0 /* XCRemoteSwiftPackageReference "matrix-rust-components-swift" */;
+			productName = MatrixRustSDK;
+		};
 		DE3BE58246DAEF9B530FA321 /* MatrixRustSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 587AFB2A6FD459546CD660F0 /* XCRemoteSwiftPackageReference "matrix-rust-components-swift" */;
