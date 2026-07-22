@@ -18,6 +18,7 @@ struct MainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage("agentUserID") private var agentUserIDOverride = ""
     @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
+    @AppStorage("showIDs") private var showIDs = false
 
     @State private var pushManager = PushManager.shared
 
@@ -166,9 +167,17 @@ struct MainView: View {
     private func conversationRow(_ conversation: Conversation, icon: String) -> some View {
         NavigationLink(value: ChatDestination(roomID: conversation.id)) {
             HStack {
-                Label(conversation.displayName, systemImage: icon)
-                    .lineLimit(1)
-                    .fontWeight(conversation.unreadCount > 0 ? .semibold : .regular)
+                VStack(alignment: .leading, spacing: 2) {
+                    Label(conversation.displayName, systemImage: icon)
+                        .lineLimit(1)
+                        .fontWeight(conversation.unreadCount > 0 ? .semibold : .regular)
+                    if showIDs {
+                        Text(conversation.id)
+                            .font(.caption2)
+                            .foregroundStyle(Color.reMuted)
+                            .lineLimit(1)
+                    }
+                }
                 if conversation.unreadCount > 0 {
                     Spacer()
                     UnreadBadge(count: conversation.unreadCount)
