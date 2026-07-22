@@ -3,11 +3,27 @@ import MatrixRustSDK
 
 /// Where a navigation push lands: a chat, optionally with a message to send
 /// on arrival (the Gemini-style home composer flow).
+///
+/// Identity is the room alone — `initialMessage`/`initialRecording`/
+/// `initialImages` are one-shot actions for the view to perform on arrival,
+/// not part of "which screen is this". Keying equality on every field would
+/// make e.g. the push-notification handler's `path = [ChatDestination(roomID:
+/// roomID)]` (no initial content) compare unequal to the already-open chat's
+/// destination, so NavigationStack would tear down and rebuild the live
+/// ChatView — losing its TimelineStore state — every time.
 struct ChatDestination: Hashable {
     let roomID: String
     var initialMessage: String?
     var initialRecording: VoiceRecorder.Recording?
     var initialImages: [ImageProcessor.Processed] = []
+
+    static func == (lhs: ChatDestination, rhs: ChatDestination) -> Bool {
+        lhs.roomID == rhs.roomID
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(roomID)
+    }
 }
 
 /// Cold start shows the home composer once; afterwards the root is the
