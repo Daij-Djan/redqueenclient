@@ -67,6 +67,22 @@ final class ConversationListStore {
         rebuild()
     }
 
+    /// Leaves and forgets every room currently known — used by the "Delete
+    /// All Conversations" setting. Best-effort per room so one failure
+    /// doesn't block the rest; returns the number that failed.
+    func deleteAllConversations() async -> Int {
+        var failures = 0
+        for room in rooms {
+            do {
+                try await room.leave()
+                try? await room.forget()
+            } catch {
+                failures += 1
+            }
+        }
+        return failures
+    }
+
     /// Forces the app icon badge back to the real unread total. Call when
     /// the app becomes active — a background push may have stamped the OS
     /// badge with whatever count the push gateway guessed, bypassing our

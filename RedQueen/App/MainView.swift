@@ -85,7 +85,7 @@ struct MainView: View {
             }
         }
         .sheet(isPresented: $isShowingSettings) {
-            SettingsView()
+            SettingsView(conversationList: conversationList)
         }
         .alert("Something went wrong", isPresented: .init(
             get: { errorMessage != nil },
