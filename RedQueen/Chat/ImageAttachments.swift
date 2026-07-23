@@ -3,6 +3,7 @@ import Observation
 import ImageIO
 import UniformTypeIdentifiers
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// ImageIO-based processing (no UIKit, works on macOS too): EXIF-aware
 /// downscale and JPEG re-encode for upload, plus small preview thumbnails.
@@ -121,23 +122,43 @@ final class ImageLoaderService {
         inflight.insert(messageID)
         Task {
             defer { inflight.remove(messageID) }
-            var data = try? await client.getMediaThumbnail(mediaSource: attachment.source,
-                                                           width: 800, height: 800)
+            var data: Data?
+            do {
+                data = try await client.getMediaThumbnail(mediaSource: attachment.source,
+                                                          width: 800, height: 800)
+            } catch {
+                DDLogError("💥 [ImageLoaderService] getMediaThumbnail(\(messageID)) FAILED: \(error)")
+            }
             if data == nil {
-                data = try? await fullData(client: client, attachment: attachment)
+                do {
+                    data = try await fullData(client: client, attachment: attachment)
+                } catch {
+                    DDLogError("💥 [ImageLoaderService] fullData fallback(\(messageID)) FAILED: \(error)")
+                }
             }
             guard let data,
-                  let cgImage = ImageProcessor.cgImage(from: data, maxDimension: 800) else { return }
+                  let cgImage = ImageProcessor.cgImage(from: data, maxDimension: 800) else {
+                DDLogError("💥 [ImageLoaderService] loadThumbnail(\(messageID)): no usable image data")
+                return
+            }
             thumbnails[messageID] = Image(cgImage, scale: 1, orientation: .up, label: Text("Image"))
         }
     }
 
     /// Full-resolution image for the viewer.
     func loadFull(attachment: ImageAttachment) async -> Image? {
-        guard let client,
-              let data = try? await fullData(client: client, attachment: attachment),
-              let cgImage = ImageProcessor.cgImage(from: data, maxDimension: 4096) else { return nil }
-        return Image(cgImage, scale: 1, orientation: .up, label: Text("Image"))
+        guard let client else { return nil }
+        do {
+            let data = try await fullData(client: client, attachment: attachment)
+            guard let cgImage = ImageProcessor.cgImage(from: data, maxDimension: 4096) else {
+                DDLogError("💥 [ImageLoaderService] loadFull: undecodable image data")
+                return nil
+            }
+            return Image(cgImage, scale: 1, orientation: .up, label: Text("Image"))
+        } catch {
+            DDLogError("💥 [ImageLoaderService] loadFull FAILED: \(error)")
+            return nil
+        }
     }
 
     private func fullData(client: Client, attachment: ImageAttachment) async throws -> Data {

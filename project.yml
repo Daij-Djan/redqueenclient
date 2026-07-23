@@ -10,6 +10,9 @@ packages:
   MatrixRustSDK:
     url: https://github.com/matrix-org/matrix-rust-components-swift
     exactVersion: 26.06.06
+  CocoaLumberjack:
+    url: https://github.com/CocoaLumberjack/CocoaLumberjack
+    from: 3.8.5
 
 settings:
   base:
@@ -38,6 +41,8 @@ targets:
         aps-environment: development
     dependencies:
       - package: MatrixRustSDK
+      - package: CocoaLumberjack
+        product: CocoaLumberjackSwift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: info.pich.redqueen
@@ -52,6 +57,10 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
         TARGETED_DEVICE_FAMILY: "1,2"
         ENABLE_USER_SCRIPT_SANDBOXING: YES
+        # Exposes the app's Documents folder (where the debug log lives) in
+        # the Files app, and lets `devicectl device copy from` pull it.
+        INFOPLIST_KEY_UIFileSharingEnabled: YES
+        INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: YES
 
   RedQueenMac:
     type: application
@@ -62,6 +71,8 @@ targets:
       path: RedQueen/RedQueenMac.entitlements
     dependencies:
       - package: MatrixRustSDK
+      - package: CocoaLumberjack
+        product: CocoaLumberjackSwift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: info.pich.redqueen

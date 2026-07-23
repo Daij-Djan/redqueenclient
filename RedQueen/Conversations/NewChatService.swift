@@ -1,8 +1,6 @@
 import Foundation
-import OSLog
+import CocoaLumberjackSwift
 import MatrixRustSDK
-
-private let log = Logger(subsystem: "info.pich.redqueen", category: "NewChat")
 
 /// Creates a fresh conversation room with the agent, ChatGPT "new chat" style.
 enum NewChatService {
@@ -22,9 +20,15 @@ enum NewChatService {
     /// caller can navigate straight into it. Bounded: a wedged sync loop
     /// surfaces as an error instead of an endless wait.
     static func createConversationRoom(client: Client, agentUserID: String) async throws -> Room {
-        log.info("Creating room, inviting \(agentUserID, privacy: .public)")
-        let roomID = try await createConversation(client: client, agentUserID: agentUserID)
-        log.info("Created \(roomID, privacy: .public), awaiting remote echo")
+        DDLogInfo("💬 [NewChatService] creating room, inviting \(agentUserID)")
+        let roomID: String
+        do {
+            roomID = try await createConversation(client: client, agentUserID: agentUserID)
+        } catch {
+            DDLogError("💥 [NewChatService] createConversation FAILED: \(error)")
+            throw error
+        }
+        DDLogInfo("💬 [NewChatService] created \(roomID), awaiting remote echo")
 
         let room = try await withThrowingTaskGroup(of: Room?.self) { group in
             group.addTask { try await client.awaitRoomRemoteEcho(roomId: roomID) }
@@ -37,15 +41,15 @@ enum NewChatService {
                 // Timed out — the room exists server-side; try the local store
                 // directly before giving up.
                 if let room = try? client.getRoom(roomId: roomID) {
-                    log.warning("Remote echo timed out for \(roomID, privacy: .public); using local store")
+                    DDLogWarn("💬 [NewChatService] remote echo timed out for \(roomID); using local store")
                     return room
                 }
-                log.error("Remote echo timed out for \(roomID, privacy: .public); room not in store")
+                DDLogError("💥 [NewChatService] remote echo timed out for \(roomID); room not in store")
                 throw NewChatError.roomDidNotSync
             }
             return room
         }
-        log.info("Room \(roomID, privacy: .public) ready")
+        DDLogInfo("💬 [NewChatService] room \(roomID) ready")
         return room
     }
 
@@ -60,6 +64,10 @@ enum NewChatService {
     /// Names a conversation after its first user message, like ChatGPT history titles.
     static func autoName(room: Room, firstMessage: String) async {
         let title = String(firstMessage.prefix(40))
-        try? await room.setName(name: title)
+        do {
+            try await room.setName(name: title)
+        } catch {
+            DDLogError("💥 [NewChatService] autoName(\(room.id())) FAILED: \(error)")
+        }
     }
 }

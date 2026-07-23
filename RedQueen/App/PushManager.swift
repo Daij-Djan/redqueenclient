@@ -1,13 +1,11 @@
 import Foundation
 import Observation
-import OSLog
 import UserNotifications
 import MatrixRustSDK
+import CocoaLumberjackSwift
 #if os(iOS)
 import UIKit
 #endif
-
-private let log = Logger(subsystem: "info.pich.redqueen", category: "Push")
 
 /// Requests notification permission, registers the APNs token as a Matrix
 /// HTTP pusher (via Sygnal), and routes notification taps to their room.
@@ -28,29 +26,45 @@ final class PushManager: NSObject, UNUserNotificationCenterDelegate {
 
     /// Called early (app launch) so cold-start notification taps are caught.
     func installDelegate() {
+        DDLogInfo("🔔 [PushManager] installDelegate()")
         UNUserNotificationCenter.current().delegate = self
     }
 
     /// Asks for permission and kicks off APNs registration.
     func start(client: Client, gatewayURL: String) async {
+        DDLogInfo("🔔 [PushManager] start() gatewayURL=\(gatewayURL)")
         self.client = client
         self.gatewayURL = gatewayURL
 
         let center = UNUserNotificationCenter.current()
-        let granted = (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false
-        guard granted else {
-            log.info("Notification permission not granted; skipping pusher registration")
+        let granted: Bool
+        do {
+            granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+        } catch {
+            DDLogError("🔔 [PushManager] requestAuthorization FAILED: \(error)")
             return
         }
+        guard granted else {
+            DDLogWarn("🔔 [PushManager] notification permission not granted; skipping pusher registration")
+            return
+        }
+        DDLogInfo("🔔 [PushManager] notification permission granted")
         #if os(iOS)
         UIApplication.shared.registerForRemoteNotifications()
+        DDLogInfo("🔔 [PushManager] registerForRemoteNotifications() called")
+        #else
+        DDLogInfo("🔔 [PushManager] skipping APNs registration on this platform")
         #endif
     }
 
     /// APNs token arrived — register it with the homeserver.
     /// Sygnal's default config base64-decodes the pushkey, so encode as base64.
     func handleDeviceToken(_ token: Data) {
-        guard let client else { return }
+        DDLogInfo("🔔 [PushManager] handleDeviceToken() length=\(token.count)")
+        guard let client else {
+            DDLogError("🔔 [PushManager] handleDeviceToken() called with no client set — dropping token")
+            return
+        }
         let pushkey = token.base64EncodedString()
         let appID = AppConfig.pusherAppID
         let gatewayURL = gatewayURL
@@ -64,15 +78,15 @@ final class PushManager: NSObject, UNUserNotificationCenterDelegate {
                     profileTag: nil,
                     lang: Locale.current.language.languageCode?.identifier ?? "en",
                     append: false)
-                log.info("Pusher registered with \(appID, privacy: .public) at \(gatewayURL, privacy: .public)")
+                DDLogInfo("🔔 [PushManager] pusher registered with \(appID) at \(gatewayURL)")
             } catch {
-                log.error("setPusher failed: \(error.localizedDescription, privacy: .public)")
+                DDLogError("🔔 [PushManager] setPusher FAILED: \(error)")
             }
         }
     }
 
     func handleRegistrationFailure(_ error: Error) {
-        log.error("APNs registration failed: \(error.localizedDescription, privacy: .public)")
+        DDLogError("🔔 [PushManager] APNs registration FAILED: \(error)")
     }
 
     // MARK: - UNUserNotificationCenterDelegate
@@ -89,16 +103,27 @@ final class PushManager: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         let roomID = notification.request.content.userInfo["room_id"] as? String
-        if roomID != nil, roomID == activeRoomID {
+        guard let roomID else {
+            DDLogWarn("🔔 [PushManager] willPresent: notification with no room_id in userInfo=\(notification.request.content.userInfo)")
+            return [.banner, .sound]
+        }
+        if roomID == activeRoomID {
+            DDLogInfo("🔔 [PushManager] willPresent: suppressing for active room \(roomID)")
             return []
         }
+        DDLogInfo("🔔 [PushManager] willPresent: showing banner for room \(roomID)")
         return [.banner, .sound]
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
-        guard let roomID = userInfo["room_id"] as? String else { return }
+        DDLogInfo("🔔 [PushManager] didReceive tap, actionIdentifier=\(response.actionIdentifier)")
+        guard let roomID = userInfo["room_id"] as? String else {
+            DDLogError("🔔 [PushManager] didReceive: no room_id in userInfo=\(userInfo)")
+            return
+        }
         pendingRoomID = roomID
+        DDLogInfo("🔔 [PushManager] didReceive: pendingRoomID set to \(roomID)")
     }
 }

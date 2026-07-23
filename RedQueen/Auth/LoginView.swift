@@ -1,4 +1,5 @@
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct LoginView: View {
     @Environment(AppSession.self) private var appSession
@@ -82,7 +83,10 @@ struct LoginView: View {
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(REBackground())
-        .onAppear { focusedField = .username }
+        .onAppear {
+            DDLogInfo("👁️ [LoginView] appeared")
+            focusedField = .username
+        }
     }
 
     private var canSubmit: Bool {
@@ -98,6 +102,7 @@ struct LoginView: View {
                 try await appSession.login(username: username.trimmingCharacters(in: .whitespaces),
                                            password: password)
             } catch {
+                DDLogError("💥 [LoginView] logIn FAILED: \(error)")
                 errorMessage = error.localizedDescription
             }
             isLoggingIn = false

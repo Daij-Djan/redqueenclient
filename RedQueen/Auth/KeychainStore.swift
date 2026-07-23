@@ -1,6 +1,7 @@
 import Foundation
 import Security
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// The persisted form of a Matrix session, stored as one keychain item.
 struct StoredSession: Codable {
@@ -45,9 +46,19 @@ enum KeychainStore {
         query[kSecMatchLimit as String] = kSecMatchLimitOne
 
         var result: AnyObject?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let data = result as? Data else { return nil }
-        return try? JSONDecoder().decode(StoredSession.self, from: data)
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        guard status == errSecSuccess, let data = result as? Data else {
+            if status != errSecItemNotFound {
+                DDLogError("💥 [KeychainStore] loadSession: SecItemCopyMatching FAILED, status=\(status)")
+            }
+            return nil
+        }
+        do {
+            return try JSONDecoder().decode(StoredSession.self, from: data)
+        } catch {
+            DDLogError("💥 [KeychainStore] loadSession: decode FAILED: \(error)")
+            return nil
+        }
     }
 
     static func save(_ session: StoredSession) throws {
@@ -60,6 +71,7 @@ enum KeychainStore {
 
         let status = SecItemAdd(attributes as CFDictionary, nil)
         guard status == errSecSuccess else {
+            DDLogError("💥 [KeychainStore] save: SecItemAdd FAILED, status=\(status)")
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(status))
         }
     }

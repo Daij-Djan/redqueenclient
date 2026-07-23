@@ -1,5 +1,6 @@
 import SwiftUI
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// Where a navigation push lands: a chat, optionally with a message to send
 /// on arrival (the Gemini-style home composer flow).
@@ -83,6 +84,7 @@ struct MainView: View {
             do {
                 try await conversationList.start(syncService: syncService, agentUserID: agentUserID)
             } catch {
+                DDLogError("💥 [MainView] conversationList.start FAILED: \(error)")
                 errorMessage = "Sync failed: \(error.localizedDescription)"
             }
             if let client = appSession.client {
@@ -178,6 +180,9 @@ struct MainView: View {
                 .accessibilityLabel("Settings")
             }
         }
+        .onAppear {
+            DDLogInfo("👁️ [MainView.conversationListView] appeared")
+        }
     }
 
     private func conversationRow(_ conversation: Conversation, icon: String) -> some View {
@@ -213,6 +218,7 @@ struct MainView: View {
     /// nonLeft filter drops it from the UI once the leave syncs.
     private func delete(_ conversation: Conversation) {
         guard let room = resolveRoom(conversation.id) else {
+            DDLogError("💥 [MainView] delete: room \(conversation.id) not found")
             errorMessage = "Room not found."
             return
         }
@@ -221,6 +227,7 @@ struct MainView: View {
                 try await room.leave()
                 try? await room.forget()
             } catch {
+                DDLogError("💥 [MainView] delete room \(conversation.id) FAILED: \(error)")
                 errorMessage = "Could not delete conversation: \(error.localizedDescription)"
             }
         }
@@ -247,6 +254,7 @@ struct MainView: View {
                                             initialRecording: recording,
                                             initialImages: images))
             } catch {
+                DDLogError("💥 [MainView] startChat FAILED: \(error)")
                 errorMessage = "Could not create chat: \(error.localizedDescription)"
             }
             isCreatingChat = false

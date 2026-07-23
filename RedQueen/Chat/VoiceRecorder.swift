@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import AVFAudio
+import CocoaLumberjackSwift
 
 /// Records mono AAC voice notes with live level metering for the waveform.
 @MainActor @Observable
@@ -23,7 +24,10 @@ final class VoiceRecorder {
 
     /// Starts recording; returns false if mic permission is denied.
     func start() async -> Bool {
-        guard await AVAudioApplication.requestRecordPermission() else { return false }
+        guard await AVAudioApplication.requestRecordPermission() else {
+            DDLogWarn("🎙️ [VoiceRecorder] start: mic permission denied")
+            return false
+        }
 
         #if os(iOS)
         let session = AVAudioSession.sharedInstance()
@@ -40,9 +44,18 @@ final class VoiceRecorder {
             AVNumberOfChannelsKey: 1,
             AVEncoderBitRateKey: 48_000,
         ]
-        guard let recorder = try? AVAudioRecorder(url: url, settings: settings) else { return false }
+        let recorder: AVAudioRecorder
+        do {
+            recorder = try AVAudioRecorder(url: url, settings: settings)
+        } catch {
+            DDLogError("💥 [VoiceRecorder] AVAudioRecorder init FAILED: \(error)")
+            return false
+        }
         recorder.isMeteringEnabled = true
-        guard recorder.record() else { return false }
+        guard recorder.record() else {
+            DDLogError("💥 [VoiceRecorder] recorder.record() returned false")
+            return false
+        }
 
         self.recorder = recorder
         levels = []

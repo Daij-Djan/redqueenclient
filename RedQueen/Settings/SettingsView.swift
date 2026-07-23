@@ -1,4 +1,5 @@
 import SwiftUI
+import CocoaLumberjackSwift
 
 struct SettingsView: View {
     let conversationList: ConversationListStore
@@ -9,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("elementCallURL") private var elementCallURL = AppConfig.defaultElementCallURL
     @AppStorage("pushGatewayURL") private var pushGatewayURL = AppConfig.defaultPushGatewayURL
     @AppStorage("showIDs") private var showIDs = false
+    @AppStorage("debugLoggingEnabled") private var debugLoggingEnabled = true
     @State private var isShowingDeleteAllConfirmation = false
     @State private var isDeletingAll = false
     @State private var deleteAllError: String?
@@ -65,6 +67,15 @@ struct SettingsView: View {
                     Toggle("Show IDs", isOn: $showIDs)
                 } footer: {
                     Text("Shows the Matrix room ID under each conversation and the event ID under each message — useful for debugging.")
+                }
+
+                Section {
+                    Toggle("Debug Logging", isOn: $debugLoggingEnabled)
+                        .onChange(of: debugLoggingEnabled) { _, enabled in
+                            AppLogger.setEnabled(enabled)
+                        }
+                } footer: {
+                    Text("Writes a debug log to Documents/Logs — on macOS that's ~/Documents, on iOS it's visible in the Files app.")
                 }
 
                 Section {
@@ -135,6 +146,9 @@ struct SettingsView: View {
             } message: {
                 Text(deleteAllError ?? "")
             }
+        }
+        .onAppear {
+            DDLogInfo("👁️ [SettingsView] appeared")
         }
     }
 }

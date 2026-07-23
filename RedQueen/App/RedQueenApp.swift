@@ -1,4 +1,5 @@
 import SwiftUI
+import CocoaLumberjackSwift
 
 #if os(iOS)
 /// Receives APNs registration callbacks and installs the notification
@@ -29,6 +30,10 @@ struct RedQueenApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     #endif
 
+    init() {
+        AppLogger.start()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -53,11 +58,14 @@ struct RootView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(REBackground())
+                .onAppear { DDLogInfo("👁️ [RootView.launching] appeared") }
                 .task { await appSession.launch() }
             case .loggedOut:
                 LoginView()
+                    .onAppear { DDLogInfo("👁️ [RootView.loggedOut] appeared") }
             case .active:
                 MainView()
+                    .onAppear { DDLogInfo("👁️ [RootView.active] appeared") }
             }
         }
     }
