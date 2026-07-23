@@ -36,8 +36,12 @@ struct MessageBubble: View {
     private var bubbleContent: some View {
         switch message.content {
         case .text(let text):
+            // No .textSelection(.enabled) here — it triggers a SwiftUI/AppKit
+            // infinite layout-invalidation loop (SelectionOverlay ↔
+            // invalidateIntrinsicContentSize) for certain markdown/attributed
+            // content, pegging the main thread. Confirmed via a stack sample
+            // of a hung process; content-dependent, hits iOS and macOS alike.
             Text(Self.markdown(text))
-                .textSelection(.enabled)
         case .audio(let attachment):
             VoiceMessageRow(message: message, attachment: attachment)
         case .image(let attachment):
