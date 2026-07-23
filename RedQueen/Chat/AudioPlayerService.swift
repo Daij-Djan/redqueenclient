@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import AVFAudio
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// Downloads and plays audio message attachments; one at a time.
 @MainActor @Observable
@@ -47,6 +48,7 @@ final class AudioPlayerService: NSObject, AVAudioPlayerDelegate {
                 playingMessageID = messageID
             } catch {
                 // Playback failure is non-fatal; just reset state.
+                DDLogError("💥 [AudioPlayerService] playback FAILED for message \(messageID): \(error)")
                 playingMessageID = nil
             }
         }

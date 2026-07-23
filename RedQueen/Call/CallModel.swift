@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import MatrixRustSDK
+import CocoaLumberjackSwift
 #if os(iOS)
 import AVFAudio
 #endif
@@ -82,6 +83,7 @@ final class CallModel {
             configureAudioSession(active: true)
             widgetURL = url
         } catch {
+            DDLogError("💥 [CallModel] start FAILED: \(error)")
             errorMessage = "Could not start call: \(error.localizedDescription)"
         }
     }

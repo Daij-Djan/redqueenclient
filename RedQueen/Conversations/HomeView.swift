@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import CocoaLumberjackSwift
 
 /// Gemini-style cold-start screen: a big centered composer. Sending creates a
 /// fresh conversation and drops straight into it.
@@ -77,7 +78,10 @@ struct HomeView: View {
             .ignoresSafeArea()
         }
         #endif
-        .onAppear { isFocused = true }
+        .onAppear {
+            DDLogInfo("👁️ [HomeView] appeared")
+            isFocused = true
+        }
     }
 
     private var inputBar: some View {

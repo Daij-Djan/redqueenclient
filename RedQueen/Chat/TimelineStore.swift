@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// An audio (or voice) attachment on a message.
 struct AudioAttachment {
@@ -73,11 +74,13 @@ final class TimelineStore {
     private var diffTask: Task<Void, Never>?
 
     func attach(room: Room, ownUserID: String?) async throws {
+        DDLogInfo("🟢 [TimelineStore] attach() called for room \(room.id()), instance=\(ObjectIdentifier(self))")
         self.room = room
         self.ownUserID = ownUserID
 
         let timeline = try await room.timeline()
         self.timeline = timeline
+        DDLogInfo("🟢 [TimelineStore] got timeline for room \(room.id())")
 
         // The SDK invokes the listener from its own background thread with
         // no ordering guarantee between independently-scheduled
@@ -94,9 +97,12 @@ final class TimelineStore {
             }
         }
         let listener = TimelineListenerProxy { diffs in
+            let summary = diffs.map(Self.describe).joined(separator: ", ")
+            DDLogDebug("🔵 [TimelineStore] listener onUpdate: [\(summary)]")
             continuation.yield(diffs)
         }
         listenerHandle = await timeline.addListener(listener: listener)
+        DDLogInfo("🟢 [TimelineStore] listener attached for room \(room.id())")
 
         typingHandle = room.subscribeToTypingNotifications(listener: TypingListenerProxy { [weak self] userIDs in
             Task { @MainActor in
@@ -113,6 +119,8 @@ final class TimelineStore {
     }
 
     func detach() {
+        DDLogInfo("🔴 [TimelineStore] detach() called, instance=\(ObjectIdentifier(self)), had \(items.count) items / \(messages.count) messages")
+        DDLogDebug(Thread.callStackSymbols.prefix(8).joined(separator: "\n    "))
         listenerHandle?.cancel()
         listenerHandle = nil
         typingHandle?.cancel()
@@ -126,6 +134,22 @@ final class TimelineStore {
         items = []
         messages = []
         typingUserIDs = []
+    }
+
+    private static func describe(_ diff: TimelineDiff) -> String {
+        switch diff {
+        case .append(let values): return "append(\(values.count))"
+        case .clear: return "CLEAR"
+        case .pushFront: return "pushFront"
+        case .pushBack: return "pushBack"
+        case .popFront: return "popFront"
+        case .popBack: return "popBack"
+        case .insert(let index, _): return "insert(\(index))"
+        case .set(let index, _): return "set(\(index))"
+        case .remove(let index): return "remove(\(index))"
+        case .truncate(let length): return "truncate(\(length))"
+        case .reset(let values): return "RESET(\(values.count))"
+        }
     }
 
     func send(_ markdown: String) async throws {
@@ -180,17 +204,30 @@ final class TimelineStore {
     }
 
     func paginateBackwards() async {
-        guard let timeline, !isBackPaginating else { return }
+        guard let timeline, !isBackPaginating else {
+            DDLogDebug("🟡 [TimelineStore] paginateBackwards() skipped (timeline=\(timeline != nil), isBackPaginating=\(isBackPaginating))")
+            return
+        }
+        DDLogInfo("🟡 [TimelineStore] paginateBackwards() starting, items.count=\(items.count)")
         isBackPaginating = true
-        _ = try? await timeline.paginateBackwards(numEvents: 50)
+        let hitStart = try? await timeline.paginateBackwards(numEvents: 50)
         isBackPaginating = false
+        DDLogInfo("🟡 [TimelineStore] paginateBackwards() done, hitStart=\(String(describing: hitStart)), items.count=\(items.count)")
     }
 
     func markAsRead() async {
-        _ = try? await timeline?.markAsRead(receiptType: .read)
+        DDLogDebug("⚪️ [TimelineStore] markAsRead() called")
+        do {
+            _ = try await timeline?.markAsRead(receiptType: .read)
+            DDLogDebug("⚪️ [TimelineStore] markAsRead() succeeded")
+        } catch {
+            DDLogError("⚪️ [TimelineStore] markAsRead() FAILED: \(error)")
+        }
     }
 
     private func apply(_ diffs: [TimelineDiff]) {
+        let beforeItems = items.count
+        let beforeMessages = messages.count
         for diff in diffs {
             switch diff {
             case .append(let values): items.append(contentsOf: values)
@@ -207,14 +244,25 @@ final class TimelineStore {
             }
         }
         messages = items.compactMap(Self.message(from:))
+        DDLogDebug("🟣 [TimelineStore] apply() diffs=[\(diffs.map(Self.describe).joined(separator: ", "))] items: \(beforeItems)->\(items.count) messages: \(beforeMessages)->\(messages.count)")
+        if beforeMessages > 0 && messages.isEmpty {
+            DDLogError("‼️ [TimelineStore] MESSAGES WENT TO ZERO! diffs=[\(diffs.map(Self.describe).joined(separator: ", "))]")
+            DDLogError(Thread.callStackSymbols.prefix(10).joined(separator: "\n    "))
+        }
     }
 
     /// Maps an SDK timeline item to a renderable message; nil for non-message
     /// items (day dividers, state events, reactions-only items…).
     static func message(from item: TimelineItem) -> ChatMessage? {
-        guard let event = item.asEvent() else { return nil }
+        guard let event = item.asEvent() else {
+            DDLogVerbose("⚫️ [TimelineStore] item \(item.uniqueId().id) skipped: not an event")
+            return nil
+        }
         guard case .msgLike(let msgLike) = event.content,
-              case .message(let message) = msgLike.kind else { return nil }
+              case .message(let message) = msgLike.kind else {
+            DDLogVerbose("⚫️ [TimelineStore] item \(item.uniqueId().id) skipped: content=\(event.content)")
+            return nil
+        }
 
         let eventID: String?
         if case .eventId(let id) = event.eventOrTransactionId {

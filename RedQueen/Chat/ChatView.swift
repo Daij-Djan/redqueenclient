@@ -1,6 +1,7 @@
 import SwiftUI
 import PhotosUI
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 struct ChatView: View {
     let room: Room
@@ -77,7 +78,8 @@ struct ChatView: View {
             .background(REBackground())
             .environment(audioPlayer)
             .environment(imageLoader)
-            .onChange(of: store.messages.count) { _, _ in
+            .onChange(of: store.messages.count) { old, new in
+                DDLogDebug("🟠 [ChatView] messages.count changed \(old) -> \(new)")
                 // Stick to the bottom for our own messages, or whenever the
                 // user hasn't scrolled up to read history.
                 if store.messages.last?.isOwn == true || isNearBottom {
@@ -143,6 +145,7 @@ struct ChatView: View {
         }
         #endif
         .task(id: room.id()) {
+            DDLogInfo("🟠 [ChatView] .task START for room \(room.id())")
             store.detach()
             audioPlayer.client = appSession.client
             imageLoader.client = appSession.client
@@ -169,12 +172,16 @@ struct ChatView: View {
                 }
             } catch {
                 attachError = "Could not load conversation: \(error.localizedDescription)"
+                DDLogError("🟠 [ChatView] .task attach FAILED: \(error)")
             }
+            DDLogInfo("🟠 [ChatView] .task END for room \(room.id())")
         }
         .onAppear {
+            DDLogInfo("🟠 [ChatView] onAppear room \(room.id())")
             PushManager.shared.activeRoomID = room.id()
         }
         .onDisappear {
+            DDLogInfo("🟠 [ChatView] onDisappear room \(room.id())")
             if PushManager.shared.activeRoomID == room.id() {
                 PushManager.shared.activeRoomID = nil
             }
@@ -194,6 +201,7 @@ struct ChatView: View {
 
     private func stageImage(data: Data) {
         guard let processed = try? ImageProcessor.processForUpload(data: data) else {
+            DDLogError("💥 [ChatView] stageImage FAILED: could not decode/process image data")
             attachError = "Could not read that image."
             return
         }
@@ -206,6 +214,7 @@ struct ChatView: View {
             try store.sendVoiceMessage(recording)
             scrollToBottom(proxy)
         } catch {
+            DDLogError("💥 [ChatView] sendVoice FAILED: \(error)")
             attachError = "Voice message failed: \(error.localizedDescription)"
         }
     }
@@ -240,6 +249,7 @@ struct ChatView: View {
                                                   firstMessage: text.isEmpty ? "Image" : text)
                 }
             } catch {
+                DDLogError("💥 [ChatView] send FAILED: \(error)")
                 attachError = "Send failed: \(error.localizedDescription)"
                 draft = text
                 pendingImages = images

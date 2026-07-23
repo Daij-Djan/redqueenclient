@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import UserNotifications
 import MatrixRustSDK
+import CocoaLumberjackSwift
 
 /// A room shown in the drawer.
 struct Conversation: Identifiable, Equatable {
@@ -77,6 +78,7 @@ final class ConversationListStore {
                 try await room.leave()
                 try? await room.forget()
             } catch {
+                DDLogError("💥 [ConversationListStore] deleteAllConversations: leave \(room.id()) FAILED: \(error)")
                 failures += 1
             }
         }
@@ -174,7 +176,13 @@ final class ConversationListStore {
         let total = Int(conversations.reduce(0) { $0 + $1.unreadCount })
         guard force || total != lastBadgeCount else { return }
         lastBadgeCount = total
-        Task { try? await UNUserNotificationCenter.current().setBadgeCount(total) }
+        Task {
+            do {
+                try await UNUserNotificationCenter.current().setBadgeCount(total)
+            } catch {
+                DDLogError("💥 [ConversationListStore] setBadgeCount(\(total)) FAILED: \(error)")
+            }
+        }
     }
 
     private func resolveMembership(room: Room, roomID: String) {
@@ -185,6 +193,7 @@ final class ConversationListStore {
                 let member = try await room.member(userId: agentUserID)
                 isAgentRoom = member.membership == .join || member.membership == .invite
             } catch {
+                DDLogError("💥 [ConversationListStore] resolveMembership \(roomID) FAILED: \(error)")
                 isAgentRoom = false
             }
             if isAgentRoom {
